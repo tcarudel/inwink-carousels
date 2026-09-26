@@ -1,0 +1,10 @@
+/* Transition en rideau – variables : --crsl-h, --crsl-accent, --crsl-radius */
+.crsl-rideau-stage { background: #14191c; color: #fff; }
+.crsl-r-layers, .crsl-r-layer { position: absolute; inset: 0; }
+.crsl-r-layer { background: #2a3136 center / cover no-repeat; }
+.crsl-r-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(35deg, rgba(8,12,15,.8), rgba(8,12,15,.15) 60%); }
+.crsl-r-content { position: absolute; left: clamp(1.2rem, 4cqi, 3rem); bottom: 6rem; width: min(55%, 600px); max-height: calc(100% - 8rem); }
+.crsl-r-controls { position: absolute; right: clamp(1.2rem, 4cqi, 3rem); bottom: 1.6rem; display: flex; align-items: center; gap: 1rem; }
+.crsl-r-controls .crsl-nav { margin: 0; }
+.crsl-r-count { font-weight: 700; font-variant-numeric: tabular-nums; }
+@container (max-width: 700px) { .crsl-r-content { width: auto; right: 1.2rem; bottom: 5.5rem; } }

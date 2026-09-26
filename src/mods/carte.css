@@ -1,0 +1,27 @@
+/* Carte qui s'agrandit – variables : --crsl-h, --crsl-accent, --crsl-radius */
+.crsl-carte-stage { background: #14191c; color: #fff; --crsl-ease: cubic-bezier(.72,0,.18,1); }
+.crsl-c-bg, .crsl-c-expander { position: absolute; background-size: cover; background-position: center; }
+.crsl-c-bg { inset: 0; z-index: 0; }
+.crsl-c-next { opacity: 0; }
+.crsl-c-expander { z-index: 2; border-radius: 14px; }
+.crsl-c-veil { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, rgba(8,12,15,.78) 0%, rgba(8,12,15,.4) 45%, rgba(8,12,15,0) 72%), linear-gradient(0deg, rgba(8,12,15,.6), rgba(8,12,15,0) 40%); }
+.crsl-c-content { position: absolute; z-index: 5; left: clamp(1.2rem, 4cqi, 3rem); bottom: 8.5rem; width: min(44%, 540px); max-height: calc(100% - 11rem); }
+.crsl-c-cards { --cw: clamp(130px, 14cqi, 200px); position: absolute; z-index: 4; left: 52%; bottom: 8.5rem; display: flex; gap: 1rem; }
+.crsl-c-card { position: relative; flex: 0 0 var(--cw); height: calc(var(--cw) * 1.45); margin: 0; padding: 0; border: 0;
+  border-radius: 14px; background: #2a3136 center / cover; overflow: hidden; cursor: pointer; color: #fff; text-align: left; font: inherit;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35); transition: transform .35s var(--crsl-ease); }
+.crsl-c-card:hover { transform: translateY(-6px); }
+.crsl-c-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,12,15,.85), rgba(8,12,15,0) 60%); }
+.crsl-c-card span { position: absolute; z-index: 1; left: .85rem; right: .85rem; bottom: .85rem; font-weight: 700; font-size: .95rem; line-height: 1.2; }
+.crsl-c-controls { position: absolute; z-index: 5; left: 52%; right: clamp(1.2rem, 4cqi, 3rem); bottom: 2.2rem; display: flex; align-items: center; gap: 1rem; }
+.crsl-c-controls .crsl-nav { margin: 0; }
+.crsl-c-bar { flex: 1; height: 2px; background: rgba(255,255,255,.3); position: relative; }
+.crsl-c-bar i { position: absolute; inset: 0 auto 0 0; background: var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); transition: width .7s var(--crsl-ease); }
+.crsl-c-count { font-weight: 800; font-size: 2.2rem; line-height: 1; min-width: 1.5ch; text-align: right; }
+@container (max-width: 700px) {
+  .crsl-c-content { top: 1.5rem; bottom: auto; left: 1.2rem; right: 1.2rem; width: auto; max-height: calc(100% - 17rem); }
+  .crsl-c-cards { left: 1.2rem; bottom: 5.5rem; --cw: 112px; gap: .7rem; }
+  .crsl-c-controls { left: 1.2rem; right: 1.2rem; bottom: 1.3rem; }
+  .crsl-c-veil { background: linear-gradient(180deg, rgba(8,12,15,.8), rgba(8,12,15,.25) 55%, rgba(8,12,15,.75)); }
+}

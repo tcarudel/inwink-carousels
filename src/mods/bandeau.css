@@ -1,0 +1,8 @@
+/* Bandeau infini – variables : --crsl-card-w. Prévoir assez d'items pour couvrir la largeur. */
+.crsl-bandeau[data-crsl] .inwink-items {
+  perspective: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.crsl-bandeau[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-card-w, 240px) !important; cursor: pointer; }
+.crsl-bandeau[data-crsl] .inwink-items > .inwink-item[data-crsl-active] { cursor: pointer; }

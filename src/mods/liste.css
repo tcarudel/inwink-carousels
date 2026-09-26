@@ -1,0 +1,34 @@
+/* Liste + aperçu – variables : --crsl-line (séparateurs), --crsl-preview-w */
+.crsl-liste[data-crsl] .inwink-items { display: block !important; border-top: 1px solid var(--crsl-line, rgba(128,128,128,.4)); }
+.crsl-liste[data-crsl] .inwink-items > .inwink-item {
+  width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important;
+  border-bottom: 1px solid var(--crsl-line, rgba(128,128,128,.4)); transition: opacity .3s;
+}
+.crsl-liste[data-crsl] .inwink-items:hover > .inwink-item { opacity: .4; }
+.crsl-liste[data-crsl] .inwink-items > .inwink-item:hover { opacity: 1; }
+.crsl-liste[data-crsl] .inwink-item :is(.crsl-f-picture, .picture-wrapper),
+.crsl-liste[data-crsl] .inwink-item .itemcontent > img { display: none !important; }
+.crsl-liste[data-crsl] .inwink-item .itemcontent {
+  display: block !important; height: auto !important; background: none !important; border: 0 !important; box-shadow: none !important;
+  padding: 1.1rem 0 !important; color: inherit !important; transition: padding .3s;
+}
+.crsl-liste[data-crsl] .inwink-item:hover .itemcontent { padding-left: .8rem !important; }
+.crsl-liste[data-crsl] .itemcontent > :is(.crsl-content, .content-wrapper, .overlay, .detail) {
+  display: flex !important; flex-direction: row !important; flex-wrap: wrap; align-items: center !important; gap: .6rem 2rem !important;
+  padding: 0 !important; background: none !important; color: inherit !important; min-height: 0 !important;
+}
+.crsl-liste[data-crsl] .itemcontent .header-container { flex: 1 1 280px; width: auto !important; }
+.crsl-liste[data-crsl] .itemcontent :is(.crsl-f-title, .title) { font-size: clamp(1.4rem, 4vw, 2.4rem) !important; font-weight: 800; line-height: 1.05; margin: 0; }
+.crsl-liste[data-crsl] .itemcontent .description {
+  flex: 1 1 260px; max-width: 44ch; width: auto !important; opacity: .75;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.crsl-liste[data-crsl] .itemcontent a[role=button] { margin: 0 !important; flex: none; }
+.crsl-l-preview {
+  position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none;
+  width: var(--crsl-preview-w, 240px); aspect-ratio: 3 / 2; border-radius: 12px;
+  background: center / cover no-repeat; box-shadow: 0 20px 40px rgba(0,0,0,.3);
+  opacity: 0; transform: translateY(-50%) scale(.85); transition: opacity .25s, transform .25s;
+}
+.crsl-l-preview.crsl-on { opacity: 1; transform: translateY(-50%) scale(1); }
+@media (hover: none) { .crsl-l-preview { display: none; } }

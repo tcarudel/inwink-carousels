@@ -1,0 +1,11 @@
+/* Galerie inclinée – variables : --crsl-card-w, --crsl-bg (fond), --crsl-num-color */
+.crsl-galerie[data-crsl] .inwink-items {
+  perspective: 900px; border-radius: var(--crsl-radius, 20px);
+  background: var(--crsl-bg, radial-gradient(circle at 50% 60%, #5b2a86, #1b0d2e));
+}
+.crsl-galerie[data-crsl] .inwink-items > .inwink-item { box-shadow: -20px 20px 40px rgba(0,0,0,.45); }
+.crsl-galerie[data-crsl] .inwink-items > .inwink-item::before {
+  content: attr(data-crsl-n); position: absolute; top: .4rem; left: .8rem; z-index: 3; pointer-events: none;
+  font-family: Georgia, "Times New Roman", serif; font-size: 3rem; line-height: 1;
+  color: var(--crsl-num-color, #fff); text-shadow: 0 2px 12px rgba(0,0,0,.45);
+}

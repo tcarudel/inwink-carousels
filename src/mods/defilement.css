@@ -1,0 +1,13 @@
+/* Défilement horizontal au scroll – variables : --crsl-card-w
+   Attention : un parent en overflow: hidden/auto empêche l'épinglage (position: sticky). */
+.crsl-defilement[data-crsl] { overflow-x: clip; }
+.crsl-defilement[data-crsl] .inwink-items {
+  position: sticky !important; top: 0; height: 100vh; margin: 0 !important;
+  display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 1.2rem;
+  padding: 0 4vw !important; overflow: visible !important;
+  transform: translateX(var(--crsl-x, 0px)); will-change: transform;
+}
+.crsl-defilement[data-crsl] .inwink-items > .inwink-item {
+  flex: 0 0 var(--crsl-card-w, min(70vw, 380px)) !important; width: var(--crsl-card-w, min(70vw, 380px)) !important;
+  max-width: none !important; margin: 0 !important;
+}

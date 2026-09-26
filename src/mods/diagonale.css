@@ -1,0 +1,24 @@
+/* Écran en diagonale – variables : --crsl-h, --crsl-accent, --crsl-diag-bg (fond clair), --crsl-diag-ink (texte) */
+.crsl-diagonale-stage { background: var(--crsl-diag-bg, #fff); color: var(--crsl-diag-ink, #1d2320); }
+.crsl-d-ghost { position: absolute; left: -1rem; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none;
+  font-weight: 900; font-size: clamp(5rem, 16cqi, 11rem); line-height: .85; text-transform: uppercase;
+  color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .18; }
+.crsl-d-panels, .crsl-d-panel { position: absolute; inset: 0; }
+.crsl-d-panel { clip-path: polygon(45% 0, 100% 0, 100% 100%, 30% 100%);
+  background: var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9)) center / cover no-repeat; }
+.crsl-d-fg { position: absolute; left: 31%; bottom: -2%; height: 104%; width: auto; max-width: none; z-index: 2; display: none;
+  pointer-events: none; filter: drop-shadow(-18px 20px 25px rgba(0,0,0,.45)); }
+.crsl-cut .crsl-d-fg { display: block; }
+.crsl-diagonale-stage .crsl-d-content { position: absolute; z-index: 3; left: clamp(1rem, 4cqi, 2.5rem); bottom: 2rem; width: min(40%, 380px); max-height: calc(100% - 4rem); color: inherit; }
+.crsl-d-pager { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: .5rem; }
+.crsl-d-pager button { width: 6px; height: 18px; padding: 0; border: 0; border-radius: 3px; background: #fff; opacity: .5; cursor: pointer; transition: .3s; }
+.crsl-d-pager button.crsl-on { opacity: 1; height: 34px; }
+.crsl-d-controls { position: absolute; right: 2.5rem; bottom: 1.2rem; z-index: 4; color: #fff; }
+.crsl-d-controls .crsl-nav { margin: 0; }
+@container (max-width: 700px) {
+  .crsl-d-panel { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 62%); }
+  .crsl-d-fg { left: 38%; height: 58%; bottom: auto; top: 0; }
+  .crsl-diagonale-stage .crsl-d-content { width: auto; right: 1rem; bottom: 4.5rem; max-height: 34%; }
+  .crsl-d-ghost { top: 72%; }
+  .crsl-d-controls { right: auto; left: 1rem; bottom: 1rem; color: inherit; }
+}

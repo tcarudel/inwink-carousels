@@ -1,0 +1,93 @@
+/*! CRSL v1.1.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs */
+.crsl-f-color { display: none !important; }
+
+/* Navigation */
+.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-arrow {
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
+  border: 1.5px solid currentColor; background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+}
+.crsl-arrow:hover { opacity: 1; }
+.crsl-arrow svg { width: 18px; height: 18px; }
+.crsl-arrow:focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
+
+/* Famille 1 : scène commune (items d'origine positionnés et transformés) */
+[data-crsl-stage] .inwink-items {
+  position: relative !important; display: block !important;
+  height: var(--crsl-h, 460px); margin: 0 !important;
+  perspective: 1000px; overflow: hidden; touch-action: pan-y; user-select: none;
+}
+[data-crsl-stage] .inwink-items > .inwink-item {
+  position: absolute !important; left: 50% !important; top: 50% !important;
+  width: var(--crsl-card-w, clamp(220px, 28vw, 300px)) !important; max-width: 80% !important;
+  margin: 0 !important; flex: none !important;
+  translate: -50% -50%;
+  transform: var(--crsl-t, none) !important;
+  opacity: var(--crsl-o, 1) !important;
+  z-index: var(--crsl-z, 1);
+  filter: var(--crsl-f, none);
+  will-change: transform;
+}
+[data-crsl-stage] .inwink-item img { -webkit-user-drag: none; }
+[data-crsl-stage] .inwink-item[data-crsl-active="0"] { cursor: pointer; }
+
+/* Famille 2 : contenu recopié dans les scènes */
+.crsl-w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; }
+.crsl-w > span { display: inline-block; }
+.crsl-x-content { color: #fff; overflow: hidden; }
+.crsl-x-content.crsl-over { -webkit-mask-image: linear-gradient(#000 78%, transparent); mask-image: linear-gradient(#000 78%, transparent); }
+.crsl-x-content :is(.crsl-content, .content-wrapper, .overlay) {
+  display: flex !important; flex-direction: column; align-items: flex-start; gap: .8rem;
+  position: static !important; background: none !important; padding: 0 !important; margin: 0 !important;
+  min-height: 0 !important; height: auto !important; width: auto !important;
+  border: 0 !important; box-shadow: none !important; color: inherit !important; opacity: 1 !important;
+}
+.crsl-x-content :is(h1, h2, h3, h4, h5, h6, p, span, div, li, header) { color: inherit; }
+.crsl-x-content :is(h1, h2, h3, h4, h5, h6, p) { margin: 0; }
+.crsl-x-content :is(.crsl-f-title, .title) {
+  font-weight: 800; line-height: 1; letter-spacing: -.01em; text-wrap: balance;
+  font-size: clamp(1.8rem, 5cqi, 3.6rem) !important;
+}
+.crsl-x-content :is(.description, p) { max-width: 46ch; line-height: 1.55; }
+.crsl-x-content a[role=button] { margin: .3rem 0 0 !important; }
+
+/* Famille 2 : scène commune */
+[data-crsl-scene] .inwink-items { display: none !important; }
+.crsl-x-stage {
+  position: relative; overflow: hidden; isolation: isolate; outline: none;
+  height: var(--crsl-h, clamp(520px, 80vh, 720px));
+  border-radius: var(--crsl-radius, 14px); text-align: left;
+  container-type: inline-size;
+}
+.crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
+.crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
+
+/* Carte qui s'agrandit – variables : --crsl-h, --crsl-accent, --crsl-radius */
+.crsl-carte-stage { background: #14191c; color: #fff; --crsl-ease: cubic-bezier(.72,0,.18,1); }
+.crsl-c-bg, .crsl-c-expander { position: absolute; background-size: cover; background-position: center; }
+.crsl-c-bg { inset: 0; z-index: 0; }
+.crsl-c-next { opacity: 0; }
+.crsl-c-expander { z-index: 2; border-radius: 14px; }
+.crsl-c-veil { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, rgba(8,12,15,.78) 0%, rgba(8,12,15,.4) 45%, rgba(8,12,15,0) 72%), linear-gradient(0deg, rgba(8,12,15,.6), rgba(8,12,15,0) 40%); }
+.crsl-c-content { position: absolute; z-index: 5; left: clamp(1.2rem, 4cqi, 3rem); bottom: 8.5rem; width: min(44%, 540px); max-height: calc(100% - 11rem); }
+.crsl-c-cards { --cw: clamp(130px, 14cqi, 200px); position: absolute; z-index: 4; left: 52%; bottom: 8.5rem; display: flex; gap: 1rem; }
+.crsl-c-card { position: relative; flex: 0 0 var(--cw); height: calc(var(--cw) * 1.45); margin: 0; padding: 0; border: 0;
+  border-radius: 14px; background: #2a3136 center / cover; overflow: hidden; cursor: pointer; color: #fff; text-align: left; font: inherit;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35); transition: transform .35s var(--crsl-ease); }
+.crsl-c-card:hover { transform: translateY(-6px); }
+.crsl-c-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,12,15,.85), rgba(8,12,15,0) 60%); }
+.crsl-c-card span { position: absolute; z-index: 1; left: .85rem; right: .85rem; bottom: .85rem; font-weight: 700; font-size: .95rem; line-height: 1.2; }
+.crsl-c-controls { position: absolute; z-index: 5; left: 52%; right: clamp(1.2rem, 4cqi, 3rem); bottom: 2.2rem; display: flex; align-items: center; gap: 1rem; }
+.crsl-c-controls .crsl-nav { margin: 0; }
+.crsl-c-bar { flex: 1; height: 2px; background: rgba(255,255,255,.3); position: relative; }
+.crsl-c-bar i { position: absolute; inset: 0 auto 0 0; background: var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); transition: width .7s var(--crsl-ease); }
+.crsl-c-count { font-weight: 800; font-size: 2.2rem; line-height: 1; min-width: 1.5ch; text-align: right; }
+@container (max-width: 700px) {
+  .crsl-c-content { top: 1.5rem; bottom: auto; left: 1.2rem; right: 1.2rem; width: auto; max-height: calc(100% - 17rem); }
+  .crsl-c-cards { left: 1.2rem; bottom: 5.5rem; --cw: 112px; gap: .7rem; }
+  .crsl-c-controls { left: 1.2rem; right: 1.2rem; bottom: 1.3rem; }
+  .crsl-c-veil { background: linear-gradient(180deg, rgba(8,12,15,.8), rgba(8,12,15,.25) 55%, rgba(8,12,15,.75)); }
+}

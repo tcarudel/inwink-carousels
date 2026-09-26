@@ -1,0 +1,35 @@
+/* Accordéon horizontal – variables : --crsl-h (hauteur), --crsl-radius */
+.crsl-accordeon[data-crsl] .inwink-items { display: flex !important; flex-wrap: nowrap !important; gap: .6rem; height: var(--crsl-h, 440px); margin: 0 !important; }
+.crsl-accordeon[data-crsl] .inwink-items > .inwink-item {
+  flex: 1 1 0 !important; width: auto !important; max-width: none !important; min-width: 0;
+  margin: 0 !important; padding: 0 !important; cursor: pointer; transition: flex .6s cubic-bezier(.2,.8,.2,1);
+}
+.crsl-accordeon[data-crsl] .inwink-items > .inwink-item[data-crsl-active="1"] { flex: 5 1 0 !important; cursor: auto; }
+.crsl-accordeon[data-crsl] .inwink-item > .itemcontent {
+  position: relative !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important;
+  height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden; border: 0 !important;
+  border-radius: var(--crsl-radius, 16px); background: #222 !important; color: #fff !important;
+}
+.crsl-accordeon[data-crsl] .itemcontent > :is(.crsl-f-picture, .picture-wrapper, img) {
+  position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important; margin: 0 !important; z-index: 0;
+}
+.crsl-accordeon[data-crsl] .itemcontent > :is(.crsl-f-picture, .picture-wrapper) img,
+.crsl-accordeon[data-crsl] .itemcontent > img { width: 100% !important; height: 100% !important; max-height: none !important; object-fit: cover; }
+.crsl-accordeon[data-crsl] .itemcontent::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(0deg, rgba(0,0,0,.78), rgba(0,0,0,0) 60%);
+}
+.crsl-accordeon[data-crsl] .itemcontent > :not(.crsl-f-picture):not(.picture-wrapper):not(img) {
+  position: relative !important; z-index: 2; min-width: 260px; flex: none !important;
+  background: none !important; color: inherit !important; padding: 1.2rem !important; margin: 0 !important; min-height: 0 !important;
+  opacity: 0; transform: translateY(12px); transition: opacity .35s, transform .35s;
+}
+.crsl-accordeon[data-crsl] .itemcontent > .overlay { display: flex !important; }
+.crsl-accordeon[data-crsl] .inwink-item[data-crsl-active="1"] .itemcontent > :not(.crsl-f-picture):not(.picture-wrapper):not(img) {
+  opacity: 1; transform: none; transition-delay: .25s;
+}
+.crsl-accordeon[data-crsl] .itemcontent :is(h1,h2,h3,h4,h5,h6,p,div,span) { color: inherit; }
+@media (max-width: 640px) {
+  .crsl-accordeon[data-crsl] .inwink-items { flex-direction: column !important; height: var(--crsl-h-mobile, 600px); }
+}

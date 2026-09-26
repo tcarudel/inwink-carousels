@@ -1,0 +1,22 @@
+/* Produit détouré – variables : --crsl-h, --crsl-accent (fond par défaut sans couleur d'item) */
+.crsl-produit-stage { background: var(--crsl-accent, var(--inwinkaccentcolor, #e2663c)); color: #fff; transition: background-color .8s; }
+.crsl-p-ring { position: absolute; left: 60%; top: 50%; width: 340px; height: 340px; margin: -170px 0 0 -170px; border-radius: 50%; background: rgba(255,255,255,.12); }
+.crsl-p-product { position: absolute; left: 60%; top: 50%; width: 42cqi; max-width: 460px; height: 82%; transform-origin: center; translate: -50% -50%; z-index: 2; }
+.crsl-p-product[hidden] { display: none; }
+.crsl-p-product img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 30px rgba(0,0,0,.35)); animation: crsl-bob 4s ease-in-out infinite; }
+.crsl-p-product.crsl-framed { width: 320px; height: 320px; }
+.crsl-p-product.crsl-framed img { object-fit: cover; border-radius: 50%; border: 6px solid rgba(255,255,255,.5); filter: none; }
+.crsl-p-bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), rgba(255,255,255,.15) 60%); animation: crsl-bob 5s ease-in-out infinite; }
+.crsl-produit-stage .crsl-p-content { position: absolute; z-index: 3; left: clamp(1.2rem, 4cqi, 2.5rem); top: 50%; transform: translateY(-50%); width: min(38%, 360px); max-height: 80%; }
+.crsl-p-controls { position: absolute; right: 1.5rem; bottom: 1.2rem; z-index: 4; }
+.crsl-p-controls .crsl-nav { margin: 0; }
+@keyframes crsl-bob { 50% { translate: 0 -12px; } }
+@media (prefers-reduced-motion: reduce) { .crsl-p-product img, .crsl-p-bubble { animation: none; } }
+@container (max-width: 700px) {
+  .crsl-produit-stage .crsl-p-content { top: 1.5rem; transform: none; width: auto; right: 1.2rem; max-height: 40%; }
+  .crsl-p-product, .crsl-p-ring { left: 50%; top: 68%; }
+  .crsl-p-product { height: 46%; width: 60cqi; }
+  .crsl-p-product.crsl-framed { width: 200px; height: 200px; }
+  .crsl-p-ring { width: 240px; height: 240px; margin: -120px 0 0 -120px; }
+  .crsl-p-controls { left: 1rem; right: auto; }
+}

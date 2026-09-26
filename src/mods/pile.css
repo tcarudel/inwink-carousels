@@ -1,0 +1,3 @@
+/* Pile de cartes – variables : --crsl-card-w */
+.crsl-pile[data-crsl] .inwink-items { perspective: none; overflow: visible; }
+.crsl-pile[data-crsl] .inwink-items > .inwink-item { box-shadow: 0 10px 30px rgba(0,0,0,.2); cursor: grab; }
