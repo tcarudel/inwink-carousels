@@ -1,0 +1,3 @@
+dist/*.zip
+dist/screens/
+__pycache__/
