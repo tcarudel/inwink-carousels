@@ -1,0 +1,10 @@
+/* <Nom lisible> – variables : --crsl-h (hauteur), --crsl-accent, --crsl-radius
+   .crsl-x-stage (commun) gère déjà : position, hauteur, arrondi, conteneur de requêtes. */
+.crsl-<cle>-stage { background: #14191c; color: #fff; }
+.crsl-k-bg { position: absolute; inset: 0; background: center / cover no-repeat; }
+.crsl-<cle>-stage .crsl-k-content { position: absolute; left: clamp(1.2rem, 4cqi, 3rem); bottom: 5rem; width: min(50%, 560px); max-height: calc(100% - 7rem); }
+.crsl-k-controls { position: absolute; right: 1.5rem; bottom: 1.2rem; }
+.crsl-k-controls .crsl-nav { margin: 0; }
+@container (max-width: 700px) {
+  .crsl-<cle>-stage .crsl-k-content { width: auto; right: 1.2rem; }
+}

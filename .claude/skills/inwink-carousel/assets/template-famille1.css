@@ -1,0 +1,4 @@
+/* <Nom lisible> – variables : --crsl-card-w (largeur des cartes)
+   Le CSS commun (core.css) gère déjà la scène et le positionnement : ne surcharger que le nécessaire. */
+.crsl-<cle>[data-crsl] .inwink-items { /* perspective, fond, arrondi… */ }
+.crsl-<cle>[data-crsl] .inwink-items > .inwink-item { /* ombre, largeur spécifique… */ }
