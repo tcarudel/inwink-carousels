@@ -1,5 +1,5 @@
 {
-  "id": "c418574d-b962-4b84-bf63-9b36a37e45b4",
+  "id": "0b6b8a24-9fd3-4c79-8739-9e94620d73f1",
   "type": "itemslist",
   "customCSS": "/* Gabarit CRSL – rendu en liste classique tant qu'aucune classe crsl- n'est appliquée au bloc.\n   Contrat pour les carrousels : .crsl-f-picture, .crsl-f-title, .crsl-content (obligatoires), .crsl-f-color (facultatif). */\n##contentid .crsl-f-color { display: none; }\n##contentid .image-light .picture-wrapper:before { background-color: rgba(255, 255, 255, 0.3); }\n##contentid .image-dark .picture-wrapper:before { background-color: rgba(0, 0, 0, 0.3); }\n##contentid :is(.image-dark, .image-light) .picture-wrapper:before { content: ''; position: absolute; inset: 0; z-index: 1; }\n##contentid .text-center :is(.header-container, .description) { text-align: center; }\n##contentid .text-center a[role=button] { margin-left: auto; margin-right: auto; }\n##contentid .text-right :is(.header-container, .description) { text-align: right; }\n##contentid .text-right a[role=button] { margin-left: auto; }\n##contentid .itemcontent { display: flex; flex-flow: column nowrap; gap: 20px; height: 100%; padding: 0; cursor: initial; user-select: initial; }\n##contentid .picture-wrapper { display: flex; position: relative; }\n##contentid .picture-wrapper .picture { width: 100%; height: max(28vh, 10rem); max-height: 220px; object-fit: cover; }\n##contentid .image-cutout .picture-wrapper .picture { object-fit: contain; }\n##contentid .itemcontent .content-wrapper { display: flex; flex-flow: column nowrap; align-items: flex-start; flex: 1; gap: 1rem; width: 100%; }\n##contentid .itemcontent .content-wrapper .header-container { width: 100%; }\n##contentid .itemcontent .content-wrapper :is(h3, h4, .description) { margin: 0; width: 100%; }\n##contentid .card .content-wrapper { padding: 0 20px 20px 20px; }\n##contentid .card :first-child.content-wrapper { padding: 20px; }\n##contentid .card .content-wrapper * + a[role=button] { margin-top: auto; }\n##contentid .inwink-item { container-type: inline-size; }",
   "properties": {
@@ -455,7 +455,7 @@
     },
     "items": [
       {
-        "id": "08ae85c1-3868-4c21-8833-8809692e448f",
+        "id": "a78a73b6-f1c7-4d28-8db6-3ae58f5c2bbc",
         "picture": "https://cdn-assets.inwink.com/backoffice-public/assets/pictures/00-inwink/Background_Blue.jpg",
         "picture-cutout": false,
         "pretitle": {
@@ -483,7 +483,7 @@
         "text-position": "left"
       },
       {
-        "id": "9574565e-66e2-4008-88da-5a668da7411b",
+        "id": "72a2ea6a-9d84-4ab2-9270-1d99d6962dc6",
         "picture": "https://cdn-assets.inwink.com/backoffice-public/assets/pictures/00-inwink/Background_Blue.jpg",
         "picture-cutout": false,
         "pretitle": {
@@ -511,7 +511,7 @@
         "text-position": "left"
       },
       {
-        "id": "0c745dc1-d86a-4377-92d8-f9b659680e28",
+        "id": "0b4a9699-2800-47d5-8608-a50d8c8092f8",
         "picture": "https://cdn-assets.inwink.com/backoffice-public/assets/pictures/00-inwink/Background_Blue.jpg",
         "picture-cutout": false,
         "pretitle": {
@@ -539,7 +539,7 @@
         "text-position": "left"
       },
       {
-        "id": "0497256a-b9f1-4112-b355-50cb648b7b47",
+        "id": "ae2d92c0-3f57-4c46-8635-b55ea1dfb48b",
         "picture": "https://cdn-assets.inwink.com/backoffice-public/assets/pictures/00-inwink/Background_Blue.jpg",
         "picture-cutout": false,
         "pretitle": {

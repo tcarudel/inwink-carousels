@@ -4,11 +4,12 @@ Pour ajouter un carrousel : créer src/mods/<cle>.js + .css, l'ajouter à CAROUS
 import json, os, random, shutil, urllib.parse, uuid, zipfile
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, OUT = os.path.join(ROOT, "src"), os.path.join(ROOT, "dist", "crsl")
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 CAROUSELS = [  # (clé, nom, famille, options)
   ("vague", "Vague diagonale", 1, "molette, auto"),
   ("coverflow", "Coverflow 3D", 1, "molette, auto"),
   ("equipe", "Slider d'équipe", 1, "molette, auto"),
+  ("focus", "Mise au point", 1, "molette, auto, compact"),
   ("galerie", "Galerie inclinée", 1, "molette, auto"),
   ("anneau", "Anneau 3D", 1, "molette"),
   ("pile", "Pile de cartes", 1, "auto"),
@@ -186,6 +187,7 @@ SECTIONS = [
   ("vague", "crsl-vague", "défaut", "".join(item_default(i) for i in range(6))),
   ("coverflow", "crsl-coverflow", "défaut", "".join(item_default(i) for i in range(6))),
   ("equipe", "crsl-equipe", "défaut", "".join(item_default(i) for i in range(6))),
+  ("focus", "crsl-focus", "défaut", "".join(item_default(i) for i in range(6))),
   ("galerie", "crsl-galerie", "overlay", "".join(item_overlay(i) for i in range(6))),
   ("anneau", "crsl-anneau", "overlay", "".join(item_overlay(i) for i in range(8))),
   ("pile", "crsl-pile", "défaut", "".join(item_default(i) for i in range(5))),

@@ -1,4 +1,4 @@
-# CRSL – carrousels pour les listes d'items inwink (v1.1.0)
+# CRSL – carrousels pour les listes d'items inwink (v1.2.0)
 
 ## Contenu
 - `standalone/crsl-<nom>/` : un CSS + un JS par carrousel (noyau inclus).
@@ -21,6 +21,7 @@ Le nombre max d'éléments du bloc est respecté. Le réglage des colonnes n'a p
 | `crsl-vague` | Vague diagonale | 1 | molette, auto |
 | `crsl-coverflow` | Coverflow 3D | 1 | molette, auto |
 | `crsl-equipe` | Slider d'équipe | 1 | molette, auto |
+| `crsl-focus` | Mise au point | 1 | molette, auto, compact |
 | `crsl-galerie` | Galerie inclinée | 1 | molette, auto |
 | `crsl-anneau` | Anneau 3D | 1 | molette |
 | `crsl-pile` | Pile de cartes | 1 | auto |
@@ -71,5 +72,5 @@ Les classes peuvent être combinées avec d'autres, et les clés des champs reno
 
 ## Hébergement externe (option)
 Déposer `library/` dans un dépôt GitHub, puis charger
-`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.1.0/library/crsl.js` (idem pour le CSS).
+`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.2.0/library/crsl.js` (idem pour le CSS).
 Le numéro de version dans l'URL évite les problèmes de cache lors des mises à jour.
