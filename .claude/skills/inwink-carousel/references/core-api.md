@@ -73,6 +73,8 @@ sur `--inwinkaccentcolor`).
 ## Conventions CSS
 
 - Classes internes : `crsl-<initiale>-…` (ex. `crsl-c-` pour carte, `crsl-r-` pour rideau) pour éviter les collisions.
-- Variables publiques documentées en tête du fichier CSS du module (`/* … – variables : --crsl-… */`).
+- Variables publiques à deux niveaux (`var(--crsl-<cle>-<propriete>, var(--crsl-<propriete>, <défaut>))`),
+  documentées en tête du fichier CSS du module (`/* … – variables : --crsl-<cle>-... */`) : voir
+  `docs/conventions.md`, section 4.
 - Responsive des scènes : `@container (max-width: 700px)` (la scène est un conteneur de requêtes).
 - `@media (prefers-reduced-motion: reduce)` pour les animations CSS en boucle.

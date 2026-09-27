@@ -1,12 +1,14 @@
-/* CRSL – styles communs */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }

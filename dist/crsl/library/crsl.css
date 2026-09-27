@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,20 +66,24 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Vague diagonale – variables : --crsl-card-w */
+/* Vague diagonale – variables : --crsl-vague-card-w */
+.crsl-vague[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-vague-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 
-/* Coverflow 3D – variables : --crsl-card-w */
+/* Coverflow 3D – variables : --crsl-coverflow-card-w */
+.crsl-coverflow[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-coverflow-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 
-/* Slider d'équipe – variables : --crsl-card-w */
+/* Slider d'équipe – variables : --crsl-equipe-card-w */
 .crsl-equipe[data-crsl] .inwink-items { perspective: none; }
+.crsl-equipe[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-equipe-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 
-/* Mise au point – variables : --crsl-card-w, --crsl-radius
+/* Mise au point – variables : --crsl-focus-card-w, --crsl-focus-radius, --crsl-focus-duration
    Options : crsl-opt-molette, crsl-opt-auto, crsl-opt-compact (masque la description, évite les cartes trop hautes) */
 .crsl-focus[data-crsl] .inwink-items { perspective: none; }
+.crsl-focus[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-focus-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 
 .crsl-focus[data-crsl] .inwink-item .itemcontent {
   display: flex; flex-flow: column nowrap; aspect-ratio: 3 / 4;
-  position: relative; overflow: hidden; border-radius: var(--crsl-radius, 16px);
+  position: relative; overflow: hidden; border-radius: var(--crsl-focus-radius, var(--crsl-radius, 16px));
   text-decoration: none; color: #fff;
 }
 .crsl-focus[data-crsl] .inwink-item :is(.picture-wrapper, .crsl-f-picture) {
@@ -96,7 +102,7 @@
   position: relative; z-index: 2; margin-top: auto !important;
   padding: 1.3rem 1.1rem !important; color: inherit;
   opacity: 0; transform: translateY(14px);
-  transition: opacity .35s ease, transform .35s ease;
+  transition: opacity var(--crsl-focus-duration, var(--crsl-duration, .35s)) ease, transform var(--crsl-focus-duration, var(--crsl-duration, .35s)) ease;
 }
 .crsl-focus[data-crsl] .inwink-item :is(.content-wrapper, .crsl-content) :is(h1, h2, h3, h4, p, div, span) { color: inherit; }
 .crsl-focus[data-crsl] .inwink-item:hover :is(.content-wrapper, .crsl-content),
@@ -111,60 +117,76 @@
   .crsl-focus[data-crsl] .inwink-item :is(.picture-wrapper, .crsl-f-picture) img { transition: none; }
 }
 
-/* Galerie inclinée – variables : --crsl-card-w, --crsl-bg (fond), --crsl-num-color */
+/* Galerie inclinée – variables : --crsl-galerie-card-w, --crsl-galerie-radius, --crsl-galerie-bg (fond), --crsl-galerie-shadow, --crsl-galerie-num-color */
 .crsl-galerie[data-crsl] .inwink-items {
-  perspective: 900px; border-radius: var(--crsl-radius, 20px);
-  background: var(--crsl-bg, radial-gradient(circle at 50% 60%, #5b2a86, #1b0d2e));
+  perspective: 900px; border-radius: var(--crsl-galerie-radius, var(--crsl-radius, 20px));
+  background: var(--crsl-galerie-bg, var(--crsl-bg, radial-gradient(circle at 50% 60%, #5b2a86, #1b0d2e)));
 }
-.crsl-galerie[data-crsl] .inwink-items > .inwink-item { box-shadow: -20px 20px 40px rgba(0,0,0,.45); }
+.crsl-galerie[data-crsl] .inwink-items > .inwink-item {
+  width: var(--crsl-galerie-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important;
+  box-shadow: var(--crsl-galerie-shadow, var(--crsl-shadow, -20px 20px 40px rgba(0,0,0,.45)));
+}
 .crsl-galerie[data-crsl] .inwink-items > .inwink-item::before {
   content: attr(data-crsl-n); position: absolute; top: .4rem; left: .8rem; z-index: 3; pointer-events: none;
   font-family: Georgia, "Times New Roman", serif; font-size: 3rem; line-height: 1;
-  color: var(--crsl-num-color, #fff); text-shadow: 0 2px 12px rgba(0,0,0,.45);
+  color: var(--crsl-galerie-num-color, #fff); text-shadow: 0 2px 12px rgba(0,0,0,.45);
 }
 
-/* Anneau 3D – variables : --crsl-card-w */
+/* Anneau 3D – variables : --crsl-anneau-card-w */
 .crsl-anneau[data-crsl] .inwink-items { perspective: none; cursor: grab; }
-.crsl-anneau[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-card-w, clamp(180px, 20vw, 240px)) !important; }
+.crsl-anneau[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-anneau-card-w, var(--crsl-card-w, clamp(180px, 20vw, 240px))) !important; }
 
-/* Pile de cartes – variables : --crsl-card-w */
+/* Pile de cartes – variables : --crsl-pile-card-w, --crsl-pile-shadow */
 .crsl-pile[data-crsl] .inwink-items { perspective: none; overflow: visible; }
-.crsl-pile[data-crsl] .inwink-items > .inwink-item { box-shadow: 0 10px 30px rgba(0,0,0,.2); cursor: grab; }
+.crsl-pile[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-pile-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; box-shadow: var(--crsl-pile-shadow, var(--crsl-shadow, 0 10px 30px rgba(0,0,0,.2))); cursor: grab; }
 
-/* Carrousel en verre – variables : --crsl-card-w, --crsl-bg (fond si pas d'image) */
-.crsl-verre[data-crsl] .inwink-items { perspective: none; border-radius: var(--crsl-radius, 22px); background: var(--crsl-bg, #6c7a89); isolation: isolate; }
+/* Carrousel en verre – variables : --crsl-verre-card-w, --crsl-verre-radius, --crsl-verre-bg (fond si pas d'image), --crsl-verre-border-width, --crsl-verre-border-color, --crsl-verre-shadow */
+.crsl-verre[data-crsl] .inwink-items {
+  perspective: none; border-radius: var(--crsl-verre-radius, var(--crsl-radius, 22px));
+  background: var(--crsl-verre-bg, var(--crsl-bg, #6c7a89)); isolation: isolate;
+}
+.crsl-verre[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-verre-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 .crsl-verre[data-crsl] .inwink-items::before {
   content: ""; position: absolute; inset: -40px; z-index: -1;
   background: var(--crsl-bgimg, none) center / cover; filter: blur(30px) saturate(1.3); transition: background-image .8s;
 }
 .crsl-verre[data-crsl] .inwink-item > .itemcontent {
-  background: rgba(255,255,255,.14) !important; border: 1px solid rgba(255,255,255,.35) !important;
+  background: rgba(255,255,255,.14) !important;
+  border-style: solid !important;
+  border-width: var(--crsl-verre-border-width, var(--crsl-border-width, 1px)) !important;
+  border-color: var(--crsl-verre-border-color, var(--crsl-border-color, rgba(255,255,255,.35))) !important;
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border-radius: 22px !important; overflow: hidden; color: #fff !important; box-shadow: 0 20px 40px rgba(0,0,0,.2);
+  border-radius: var(--crsl-verre-radius, var(--crsl-radius, 22px)) !important; overflow: hidden; color: #fff !important;
+  box-shadow: var(--crsl-verre-shadow, var(--crsl-shadow, 0 20px 40px rgba(0,0,0,.2)));
 }
 .crsl-verre[data-crsl] .inwink-item > .itemcontent :is(h1,h2,h3,h4,h5,h6,p,div,span) { color: inherit; }
 .crsl-verre[data-crsl] .inwink-item :is(.crsl-f-picture, .picture-wrapper) { margin: 12px 12px 0; border-radius: 14px; overflow: hidden; }
 
-/* Bandeau infini – variables : --crsl-card-w. Prévoir assez d'items pour couvrir la largeur. */
+/* Bandeau infini – variables : --crsl-bandeau-card-w. Prévoir assez d'items pour couvrir la largeur. */
 .crsl-bandeau[data-crsl] .inwink-items {
   perspective: none;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
-.crsl-bandeau[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-card-w, 240px) !important; cursor: pointer; }
+.crsl-bandeau[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-bandeau-card-w, var(--crsl-card-w, 240px)) !important; cursor: pointer; }
 .crsl-bandeau[data-crsl] .inwink-items > .inwink-item[data-crsl-active] { cursor: pointer; }
 
-/* Accordéon horizontal – variables : --crsl-h (hauteur), --crsl-radius */
-.crsl-accordeon[data-crsl] .inwink-items { display: flex !important; flex-wrap: nowrap !important; gap: .6rem; height: var(--crsl-h, 440px); margin: 0 !important; }
+/* Accordéon horizontal – variables : --crsl-accordeon-h (hauteur), --crsl-accordeon-radius, --crsl-accordeon-gap */
+.crsl-accordeon[data-crsl] .inwink-items {
+  display: flex !important; flex-wrap: nowrap !important;
+  gap: var(--crsl-accordeon-gap, var(--crsl-gap, .6rem));
+  height: var(--crsl-accordeon-h, var(--crsl-h, 440px)); margin: 0 !important;
+}
 .crsl-accordeon[data-crsl] .inwink-items > .inwink-item {
   flex: 1 1 0 !important; width: auto !important; max-width: none !important; min-width: 0;
-  margin: 0 !important; padding: 0 !important; cursor: pointer; transition: flex .6s cubic-bezier(.2,.8,.2,1);
+  margin: 0 !important; padding: 0 !important; cursor: pointer;
+  transition: flex var(--crsl-accordeon-duration, var(--crsl-duration, .6s)) cubic-bezier(.2,.8,.2,1);
 }
 .crsl-accordeon[data-crsl] .inwink-items > .inwink-item[data-crsl-active="1"] { flex: 5 1 0 !important; cursor: auto; }
 .crsl-accordeon[data-crsl] .inwink-item > .itemcontent {
   position: relative !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important;
   height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden; border: 0 !important;
-  border-radius: var(--crsl-radius, 16px); background: #222 !important; color: #fff !important;
+  border-radius: var(--crsl-accordeon-radius, var(--crsl-radius, 16px)); background: #222 !important; color: #fff !important;
 }
 .crsl-accordeon[data-crsl] .itemcontent > :is(.crsl-f-picture, .picture-wrapper, img) {
   position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important;
@@ -187,28 +209,31 @@
 }
 .crsl-accordeon[data-crsl] .itemcontent :is(h1,h2,h3,h4,h5,h6,p,div,span) { color: inherit; }
 @media (max-width: 640px) {
-  .crsl-accordeon[data-crsl] .inwink-items { flex-direction: column !important; height: var(--crsl-h-mobile, 600px); }
+  .crsl-accordeon[data-crsl] .inwink-items { flex-direction: column !important; height: var(--crsl-accordeon-h-mobile, var(--crsl-h-mobile, 600px)); }
 }
 
-/* Défilement horizontal au scroll – variables : --crsl-card-w
+/* Défilement horizontal au scroll – variables : --crsl-defilement-card-w, --crsl-defilement-gap
    Attention : un parent en overflow: hidden/auto empêche l'épinglage (position: sticky). */
 .crsl-defilement[data-crsl] { overflow-x: clip; }
 .crsl-defilement[data-crsl] .inwink-items {
   position: sticky !important; top: 0; height: 100vh; margin: 0 !important;
-  display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 1.2rem;
+  display: flex !important; flex-wrap: nowrap !important; align-items: center;
+  gap: var(--crsl-defilement-gap, var(--crsl-gap, 1.2rem));
   padding: 0 4vw !important; overflow: visible !important;
   transform: translateX(var(--crsl-x, 0px)); will-change: transform;
 }
 .crsl-defilement[data-crsl] .inwink-items > .inwink-item {
-  flex: 0 0 var(--crsl-card-w, min(70vw, 380px)) !important; width: var(--crsl-card-w, min(70vw, 380px)) !important;
+  flex: 0 0 var(--crsl-defilement-card-w, var(--crsl-card-w, min(70vw, 380px))) !important;
+  width: var(--crsl-defilement-card-w, var(--crsl-card-w, min(70vw, 380px))) !important;
   max-width: none !important; margin: 0 !important;
 }
 
-/* Liste + aperçu – variables : --crsl-line (séparateurs), --crsl-preview-w */
-.crsl-liste[data-crsl] .inwink-items { display: block !important; border-top: 1px solid var(--crsl-line, rgba(128,128,128,.4)); }
+/* Liste + aperçu – variables : --crsl-liste-line (séparateurs), --crsl-liste-preview-w, --crsl-liste-duration, --crsl-liste-radius, --crsl-liste-shadow */
+.crsl-liste[data-crsl] .inwink-items { display: block !important; border-top: 1px solid var(--crsl-liste-line, var(--crsl-line, rgba(128,128,128,.4))); }
 .crsl-liste[data-crsl] .inwink-items > .inwink-item {
   width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important;
-  border-bottom: 1px solid var(--crsl-line, rgba(128,128,128,.4)); transition: opacity .3s;
+  border-bottom: 1px solid var(--crsl-liste-line, var(--crsl-line, rgba(128,128,128,.4)));
+  transition: opacity var(--crsl-liste-duration, var(--crsl-duration, .3s));
 }
 .crsl-liste[data-crsl] .inwink-items:hover > .inwink-item { opacity: .4; }
 .crsl-liste[data-crsl] .inwink-items > .inwink-item:hover { opacity: 1; }
@@ -216,7 +241,7 @@
 .crsl-liste[data-crsl] .inwink-item .itemcontent > img { display: none !important; }
 .crsl-liste[data-crsl] .inwink-item .itemcontent {
   display: block !important; height: auto !important; background: none !important; border: 0 !important; box-shadow: none !important;
-  padding: 1.1rem 0 !important; color: inherit !important; transition: padding .3s;
+  padding: 1.1rem 0 !important; color: inherit !important; transition: padding var(--crsl-liste-duration, var(--crsl-duration, .3s));
 }
 .crsl-liste[data-crsl] .inwink-item:hover .itemcontent { padding-left: .8rem !important; }
 .crsl-liste[data-crsl] .itemcontent > :is(.crsl-content, .content-wrapper, .overlay, .detail) {
@@ -232,33 +257,39 @@
 .crsl-liste[data-crsl] .itemcontent a[role=button] { margin: 0 !important; flex: none; }
 .crsl-l-preview {
   position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none;
-  width: var(--crsl-preview-w, 240px); aspect-ratio: 3 / 2; border-radius: 12px;
-  background: center / cover no-repeat; box-shadow: 0 20px 40px rgba(0,0,0,.3);
-  opacity: 0; transform: translateY(-50%) scale(.85); transition: opacity .25s, transform .25s;
+  width: var(--crsl-liste-preview-w, var(--crsl-preview-w, 240px)); aspect-ratio: 3 / 2;
+  border-radius: var(--crsl-liste-radius, var(--crsl-radius, 12px));
+  background: center / cover no-repeat; box-shadow: var(--crsl-liste-shadow, var(--crsl-shadow, 0 20px 40px rgba(0,0,0,.3)));
+  opacity: 0; transform: translateY(-50%) scale(.85);
+  transition: opacity var(--crsl-liste-duration, var(--crsl-duration, .25s)), transform var(--crsl-liste-duration, var(--crsl-duration, .25s));
 }
 .crsl-l-preview.crsl-on { opacity: 1; transform: translateY(-50%) scale(1); }
 @media (hover: none) { .crsl-l-preview { display: none; } }
 
-/* Carte qui s'agrandit – variables : --crsl-h, --crsl-accent, --crsl-radius */
-.crsl-carte-stage { background: #14191c; color: #fff; --crsl-ease: cubic-bezier(.72,0,.18,1); }
+/* Carte qui s'agrandit – variables : --crsl-carte-h, --crsl-carte-accent, --crsl-carte-radius, --crsl-carte-duration, --crsl-carte-shadow */
+.crsl-carte-stage {
+  height: var(--crsl-carte-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: #14191c; color: #fff; --crsl-ease: cubic-bezier(.72,0,.18,1);
+}
 .crsl-c-bg, .crsl-c-expander { position: absolute; background-size: cover; background-position: center; }
 .crsl-c-bg { inset: 0; z-index: 0; }
 .crsl-c-next { opacity: 0; }
-.crsl-c-expander { z-index: 2; border-radius: 14px; }
+.crsl-c-expander { z-index: 2; border-radius: var(--crsl-carte-radius, var(--crsl-radius, 14px)); }
 .crsl-c-veil { position: absolute; inset: 0; z-index: 3; pointer-events: none;
   background: linear-gradient(90deg, rgba(8,12,15,.78) 0%, rgba(8,12,15,.4) 45%, rgba(8,12,15,0) 72%), linear-gradient(0deg, rgba(8,12,15,.6), rgba(8,12,15,0) 40%); }
 .crsl-c-content { position: absolute; z-index: 5; left: clamp(1.2rem, 4cqi, 3rem); bottom: 8.5rem; width: min(44%, 540px); max-height: calc(100% - 11rem); }
 .crsl-c-cards { --cw: clamp(130px, 14cqi, 200px); position: absolute; z-index: 4; left: 52%; bottom: 8.5rem; display: flex; gap: 1rem; }
 .crsl-c-card { position: relative; flex: 0 0 var(--cw); height: calc(var(--cw) * 1.45); margin: 0; padding: 0; border: 0;
-  border-radius: 14px; background: #2a3136 center / cover; overflow: hidden; cursor: pointer; color: #fff; text-align: left; font: inherit;
-  box-shadow: 0 18px 40px rgba(0,0,0,.35); transition: transform .35s var(--crsl-ease); }
+  border-radius: var(--crsl-carte-radius, var(--crsl-radius, 14px)); background: #2a3136 center / cover; overflow: hidden; cursor: pointer; color: #fff; text-align: left; font: inherit;
+  box-shadow: var(--crsl-carte-shadow, var(--crsl-shadow, 0 18px 40px rgba(0,0,0,.35)));
+  transition: transform var(--crsl-carte-duration, var(--crsl-duration, .35s)) var(--crsl-ease); }
 .crsl-c-card:hover { transform: translateY(-6px); }
 .crsl-c-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,12,15,.85), rgba(8,12,15,0) 60%); }
 .crsl-c-card span { position: absolute; z-index: 1; left: .85rem; right: .85rem; bottom: .85rem; font-weight: 700; font-size: .95rem; line-height: 1.2; }
 .crsl-c-controls { position: absolute; z-index: 5; left: 52%; right: clamp(1.2rem, 4cqi, 3rem); bottom: 2.2rem; display: flex; align-items: center; gap: 1rem; }
 .crsl-c-controls .crsl-nav { margin: 0; }
 .crsl-c-bar { flex: 1; height: 2px; background: rgba(255,255,255,.3); position: relative; }
-.crsl-c-bar i { position: absolute; inset: 0 auto 0 0; background: var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); transition: width .7s var(--crsl-ease); }
+.crsl-c-bar i { position: absolute; inset: 0 auto 0 0; background: var(--crsl-carte-accent, var(--crsl-accent, var(--inwinkaccentcolor, #f2b441))); transition: width .7s var(--crsl-ease); }
 .crsl-c-count { font-weight: 800; font-size: 2.2rem; line-height: 1; min-width: 1.5ch; text-align: right; }
 @container (max-width: 700px) {
   .crsl-c-content { top: 1.5rem; bottom: auto; left: 1.2rem; right: 1.2rem; width: auto; max-height: calc(100% - 17rem); }
@@ -267,8 +298,13 @@
   .crsl-c-veil { background: linear-gradient(180deg, rgba(8,12,15,.8), rgba(8,12,15,.25) 55%, rgba(8,12,15,.75)); }
 }
 
-/* Transition en rideau – variables : --crsl-h, --crsl-accent, --crsl-radius */
-.crsl-rideau-stage { background: #14191c; color: #fff; }
+/* Transition en rideau – variables : --crsl-rideau-h, --crsl-rideau-radius
+   (l'accent suit la couleur de l'item, posée en JS ; --crsl-accent sert de repli si l'item n'a pas de couleur) */
+.crsl-rideau-stage {
+  height: var(--crsl-rideau-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  border-radius: var(--crsl-rideau-radius, var(--crsl-radius, 14px));
+  background: #14191c; color: #fff;
+}
 .crsl-r-layers, .crsl-r-layer { position: absolute; inset: 0; }
 .crsl-r-layer { background: #2a3136 center / cover no-repeat; }
 .crsl-r-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(35deg, rgba(8,12,15,.8), rgba(8,12,15,.15) 60%); }
@@ -278,14 +314,18 @@
 .crsl-r-count { font-weight: 700; font-variant-numeric: tabular-nums; }
 @container (max-width: 700px) { .crsl-r-content { width: auto; right: 1.2rem; bottom: 5.5rem; } }
 
-/* Écran en diagonale – variables : --crsl-h, --crsl-accent, --crsl-diag-bg (fond clair), --crsl-diag-ink (texte) */
-.crsl-diagonale-stage { background: var(--crsl-diag-bg, #fff); color: var(--crsl-diag-ink, #1d2320); }
+/* Écran en diagonale – variables : --crsl-diagonale-h, --crsl-diagonale-accent, --crsl-diagonale-diag-bg (fond clair), --crsl-diagonale-diag-ink (texte) */
+.crsl-diagonale-stage {
+  height: var(--crsl-diagonale-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: var(--crsl-diagonale-diag-bg, var(--crsl-diag-bg, #fff));
+  color: var(--crsl-diagonale-diag-ink, var(--crsl-diag-ink, #1d2320));
+}
 .crsl-d-ghost { position: absolute; left: -1rem; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none;
   font-weight: 900; font-size: clamp(5rem, 16cqi, 11rem); line-height: .85; text-transform: uppercase;
   color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .18; }
 .crsl-d-panels, .crsl-d-panel { position: absolute; inset: 0; }
 .crsl-d-panel { clip-path: polygon(45% 0, 100% 0, 100% 100%, 30% 100%);
-  background: var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9)) center / cover no-repeat; }
+  background: var(--crsl-diagonale-accent, var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9))) center / cover no-repeat; }
 .crsl-d-fg { position: absolute; left: 31%; bottom: -2%; height: 104%; width: auto; max-width: none; z-index: 2; display: none;
   pointer-events: none; filter: drop-shadow(-18px 20px 25px rgba(0,0,0,.45)); }
 .crsl-cut .crsl-d-fg { display: block; }
@@ -303,8 +343,12 @@
   .crsl-d-controls { right: auto; left: 1rem; bottom: 1rem; color: inherit; }
 }
 
-/* Produit détouré – variables : --crsl-h, --crsl-accent (fond par défaut sans couleur d'item) */
-.crsl-produit-stage { background: var(--crsl-accent, var(--inwinkaccentcolor, #e2663c)); color: #fff; transition: background-color .8s; }
+/* Produit détouré – variables : --crsl-produit-h, --crsl-produit-accent (fond par défaut sans couleur d'item), --crsl-produit-duration */
+.crsl-produit-stage {
+  height: var(--crsl-produit-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: var(--crsl-produit-accent, var(--crsl-accent, var(--inwinkaccentcolor, #e2663c)));
+  color: #fff; transition: background-color var(--crsl-produit-duration, var(--crsl-duration, .8s));
+}
 .crsl-p-ring { position: absolute; left: 60%; top: 50%; width: 340px; height: 340px; margin: -170px 0 0 -170px; border-radius: 50%; background: rgba(255,255,255,.12); }
 .crsl-p-product { position: absolute; left: 60%; top: 50%; width: 42cqi; max-width: 460px; height: 82%; transform-origin: center; translate: -50% -50%; z-index: 2; }
 .crsl-p-product[hidden] { display: none; }

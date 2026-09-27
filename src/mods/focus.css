@@ -1,10 +1,11 @@
-/* Mise au point – variables : --crsl-card-w, --crsl-radius
+/* Mise au point – variables : --crsl-focus-card-w, --crsl-focus-radius, --crsl-focus-duration
    Options : crsl-opt-molette, crsl-opt-auto, crsl-opt-compact (masque la description, évite les cartes trop hautes) */
 .crsl-focus[data-crsl] .inwink-items { perspective: none; }
+.crsl-focus[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-focus-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }
 
 .crsl-focus[data-crsl] .inwink-item .itemcontent {
   display: flex; flex-flow: column nowrap; aspect-ratio: 3 / 4;
-  position: relative; overflow: hidden; border-radius: var(--crsl-radius, 16px);
+  position: relative; overflow: hidden; border-radius: var(--crsl-focus-radius, var(--crsl-radius, 16px));
   text-decoration: none; color: #fff;
 }
 .crsl-focus[data-crsl] .inwink-item :is(.picture-wrapper, .crsl-f-picture) {
@@ -23,7 +24,7 @@
   position: relative; z-index: 2; margin-top: auto !important;
   padding: 1.3rem 1.1rem !important; color: inherit;
   opacity: 0; transform: translateY(14px);
-  transition: opacity .35s ease, transform .35s ease;
+  transition: opacity var(--crsl-focus-duration, var(--crsl-duration, .35s)) ease, transform var(--crsl-focus-duration, var(--crsl-duration, .35s)) ease;
 }
 .crsl-focus[data-crsl] .inwink-item :is(.content-wrapper, .crsl-content) :is(h1, h2, h3, h4, p, div, span) { color: inherit; }
 .crsl-focus[data-crsl] .inwink-item:hover :is(.content-wrapper, .crsl-content),

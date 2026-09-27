@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,14 +66,18 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Écran en diagonale – variables : --crsl-h, --crsl-accent, --crsl-diag-bg (fond clair), --crsl-diag-ink (texte) */
-.crsl-diagonale-stage { background: var(--crsl-diag-bg, #fff); color: var(--crsl-diag-ink, #1d2320); }
+/* Écran en diagonale – variables : --crsl-diagonale-h, --crsl-diagonale-accent, --crsl-diagonale-diag-bg (fond clair), --crsl-diagonale-diag-ink (texte) */
+.crsl-diagonale-stage {
+  height: var(--crsl-diagonale-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: var(--crsl-diagonale-diag-bg, var(--crsl-diag-bg, #fff));
+  color: var(--crsl-diagonale-diag-ink, var(--crsl-diag-ink, #1d2320));
+}
 .crsl-d-ghost { position: absolute; left: -1rem; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none;
   font-weight: 900; font-size: clamp(5rem, 16cqi, 11rem); line-height: .85; text-transform: uppercase;
   color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .18; }
 .crsl-d-panels, .crsl-d-panel { position: absolute; inset: 0; }
 .crsl-d-panel { clip-path: polygon(45% 0, 100% 0, 100% 100%, 30% 100%);
-  background: var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9)) center / cover no-repeat; }
+  background: var(--crsl-diagonale-accent, var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9))) center / cover no-repeat; }
 .crsl-d-fg { position: absolute; left: 31%; bottom: -2%; height: 104%; width: auto; max-width: none; z-index: 2; display: none;
   pointer-events: none; filter: drop-shadow(-18px 20px 25px rgba(0,0,0,.45)); }
 .crsl-cut .crsl-d-fg { display: block; }

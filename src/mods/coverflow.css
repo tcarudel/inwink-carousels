@@ -1,1 +1,2 @@
-/* Coverflow 3D – variables : --crsl-card-w */
+/* Coverflow 3D – variables : --crsl-coverflow-card-w */
+.crsl-coverflow[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-coverflow-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }

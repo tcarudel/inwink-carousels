@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,8 +66,12 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Produit détouré – variables : --crsl-h, --crsl-accent (fond par défaut sans couleur d'item) */
-.crsl-produit-stage { background: var(--crsl-accent, var(--inwinkaccentcolor, #e2663c)); color: #fff; transition: background-color .8s; }
+/* Produit détouré – variables : --crsl-produit-h, --crsl-produit-accent (fond par défaut sans couleur d'item), --crsl-produit-duration */
+.crsl-produit-stage {
+  height: var(--crsl-produit-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: var(--crsl-produit-accent, var(--crsl-accent, var(--inwinkaccentcolor, #e2663c)));
+  color: #fff; transition: background-color var(--crsl-produit-duration, var(--crsl-duration, .8s));
+}
 .crsl-p-ring { position: absolute; left: 60%; top: 50%; width: 340px; height: 340px; margin: -170px 0 0 -170px; border-radius: 50%; background: rgba(255,255,255,.12); }
 .crsl-p-product { position: absolute; left: 60%; top: 50%; width: 42cqi; max-width: 460px; height: 82%; transform-origin: center; translate: -50% -50%; z-index: 2; }
 .crsl-p-product[hidden] { display: none; }

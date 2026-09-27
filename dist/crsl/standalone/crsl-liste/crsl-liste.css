@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,11 +66,12 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Liste + aperçu – variables : --crsl-line (séparateurs), --crsl-preview-w */
-.crsl-liste[data-crsl] .inwink-items { display: block !important; border-top: 1px solid var(--crsl-line, rgba(128,128,128,.4)); }
+/* Liste + aperçu – variables : --crsl-liste-line (séparateurs), --crsl-liste-preview-w, --crsl-liste-duration, --crsl-liste-radius, --crsl-liste-shadow */
+.crsl-liste[data-crsl] .inwink-items { display: block !important; border-top: 1px solid var(--crsl-liste-line, var(--crsl-line, rgba(128,128,128,.4))); }
 .crsl-liste[data-crsl] .inwink-items > .inwink-item {
   width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important;
-  border-bottom: 1px solid var(--crsl-line, rgba(128,128,128,.4)); transition: opacity .3s;
+  border-bottom: 1px solid var(--crsl-liste-line, var(--crsl-line, rgba(128,128,128,.4)));
+  transition: opacity var(--crsl-liste-duration, var(--crsl-duration, .3s));
 }
 .crsl-liste[data-crsl] .inwink-items:hover > .inwink-item { opacity: .4; }
 .crsl-liste[data-crsl] .inwink-items > .inwink-item:hover { opacity: 1; }
@@ -76,7 +79,7 @@
 .crsl-liste[data-crsl] .inwink-item .itemcontent > img { display: none !important; }
 .crsl-liste[data-crsl] .inwink-item .itemcontent {
   display: block !important; height: auto !important; background: none !important; border: 0 !important; box-shadow: none !important;
-  padding: 1.1rem 0 !important; color: inherit !important; transition: padding .3s;
+  padding: 1.1rem 0 !important; color: inherit !important; transition: padding var(--crsl-liste-duration, var(--crsl-duration, .3s));
 }
 .crsl-liste[data-crsl] .inwink-item:hover .itemcontent { padding-left: .8rem !important; }
 .crsl-liste[data-crsl] .itemcontent > :is(.crsl-content, .content-wrapper, .overlay, .detail) {
@@ -92,9 +95,11 @@
 .crsl-liste[data-crsl] .itemcontent a[role=button] { margin: 0 !important; flex: none; }
 .crsl-l-preview {
   position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none;
-  width: var(--crsl-preview-w, 240px); aspect-ratio: 3 / 2; border-radius: 12px;
-  background: center / cover no-repeat; box-shadow: 0 20px 40px rgba(0,0,0,.3);
-  opacity: 0; transform: translateY(-50%) scale(.85); transition: opacity .25s, transform .25s;
+  width: var(--crsl-liste-preview-w, var(--crsl-preview-w, 240px)); aspect-ratio: 3 / 2;
+  border-radius: var(--crsl-liste-radius, var(--crsl-radius, 12px));
+  background: center / cover no-repeat; box-shadow: var(--crsl-liste-shadow, var(--crsl-shadow, 0 20px 40px rgba(0,0,0,.3)));
+  opacity: 0; transform: translateY(-50%) scale(.85);
+  transition: opacity var(--crsl-liste-duration, var(--crsl-duration, .25s)), transform var(--crsl-liste-duration, var(--crsl-duration, .25s));
 }
 .crsl-l-preview.crsl-on { opacity: 1; transform: translateY(-50%) scale(1); }
 @media (hover: none) { .crsl-l-preview { display: none; } }

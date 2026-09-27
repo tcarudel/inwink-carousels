@@ -1,11 +1,15 @@
-/* Écran en diagonale – variables : --crsl-h, --crsl-accent, --crsl-diag-bg (fond clair), --crsl-diag-ink (texte) */
-.crsl-diagonale-stage { background: var(--crsl-diag-bg, #fff); color: var(--crsl-diag-ink, #1d2320); }
+/* Écran en diagonale – variables : --crsl-diagonale-h, --crsl-diagonale-accent, --crsl-diagonale-diag-bg (fond clair), --crsl-diagonale-diag-ink (texte) */
+.crsl-diagonale-stage {
+  height: var(--crsl-diagonale-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  background: var(--crsl-diagonale-diag-bg, var(--crsl-diag-bg, #fff));
+  color: var(--crsl-diagonale-diag-ink, var(--crsl-diag-ink, #1d2320));
+}
 .crsl-d-ghost { position: absolute; left: -1rem; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none;
   font-weight: 900; font-size: clamp(5rem, 16cqi, 11rem); line-height: .85; text-transform: uppercase;
   color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .18; }
 .crsl-d-panels, .crsl-d-panel { position: absolute; inset: 0; }
 .crsl-d-panel { clip-path: polygon(45% 0, 100% 0, 100% 100%, 30% 100%);
-  background: var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9)) center / cover no-repeat; }
+  background: var(--crsl-diagonale-accent, var(--crsl-accent, var(--inwinkaccentcolor, #2f80c9))) center / cover no-repeat; }
 .crsl-d-fg { position: absolute; left: 31%; bottom: -2%; height: 104%; width: auto; max-width: none; z-index: 2; display: none;
   pointer-events: none; filter: drop-shadow(-18px 20px 25px rgba(0,0,0,.45)); }
 .crsl-cut .crsl-d-fg { display: block; }

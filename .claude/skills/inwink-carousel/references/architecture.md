@@ -98,18 +98,14 @@ Existants : carte, rideau, diagonale, produit.
 
 ## 5. Contrat du gabarit CRSL (famille 2)
 
-| Sélecteur | Rôle | Statut |
-|---|---|---|
-| `.crsl-f-picture` | conteneur de l'image principale (`img` à l'intérieur) | obligatoire |
-| `.crsl-f-title` | titre : animé mot par mot dans la scène, repris dans les vignettes | obligatoire |
-| `.crsl-content` | tout le contenu hors image, recopié tel quel dans la scène | obligatoire |
-| `.crsl-f-color` | texte d'une couleur CSS (hexa, rgb, rgba, hsl), masqué | facultatif |
-| `.image-cutout` | classe conditionnelle sur la racine de l'item : image détourée (PNG transparent) | facultatif |
+Table complète du contrat `crsl-f-*` : `docs/conventions.md`, section 3 (partagée avec la skill `inwink-item-style`,
+qui crée et corrige les gabarits).
 
 Replis pour les gabarits standards : `.picture-wrapper img`, `.title` / `h3`, `.content-wrapper` / `.overlay`.
 Si l'item contient `.crsl-content`, aucune autre image que `.crsl-f-picture img` n'est prise comme image principale.
 L'utilisateur peut ajouter librement des champs dans `.crsl-content` ; ils apparaissent dans la scène.
-Le gabarit de référence est généré par `build.py` (`dist/crsl/gabarit/gabarit-crsl.json`).
+Le gabarit de référence est `src/gabarits/gabarit-crsl.json`, copié tel quel par `build.py` dans
+`dist/crsl/gabarit/gabarit-crsl.json`.
 
 ## 6. Pièges connus
 

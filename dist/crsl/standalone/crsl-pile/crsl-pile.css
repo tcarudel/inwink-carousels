@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,6 +66,6 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Pile de cartes – variables : --crsl-card-w */
+/* Pile de cartes – variables : --crsl-pile-card-w, --crsl-pile-shadow */
 .crsl-pile[data-crsl] .inwink-items { perspective: none; overflow: visible; }
-.crsl-pile[data-crsl] .inwink-items > .inwink-item { box-shadow: 0 10px 30px rgba(0,0,0,.2); cursor: grab; }
+.crsl-pile[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-pile-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; box-shadow: var(--crsl-pile-shadow, var(--crsl-shadow, 0 10px 30px rgba(0,0,0,.2))); cursor: grab; }

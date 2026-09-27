@@ -1,5 +1,10 @@
-/* Transition en rideau – variables : --crsl-h, --crsl-accent, --crsl-radius */
-.crsl-rideau-stage { background: #14191c; color: #fff; }
+/* Transition en rideau – variables : --crsl-rideau-h, --crsl-rideau-radius
+   (l'accent suit la couleur de l'item, posée en JS ; --crsl-accent sert de repli si l'item n'a pas de couleur) */
+.crsl-rideau-stage {
+  height: var(--crsl-rideau-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  border-radius: var(--crsl-rideau-radius, var(--crsl-radius, 14px));
+  background: #14191c; color: #fff;
+}
 .crsl-r-layers, .crsl-r-layer { position: absolute; inset: 0; }
 .crsl-r-layer { background: #2a3136 center / cover no-repeat; }
 .crsl-r-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(35deg, rgba(8,12,15,.8), rgba(8,12,15,.15) 60%); }

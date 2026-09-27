@@ -1,1 +1,2 @@
-/* Vague diagonale – variables : --crsl-card-w */
+/* Vague diagonale – variables : --crsl-vague-card-w */
+.crsl-vague[data-crsl] .inwink-items > .inwink-item { width: var(--crsl-vague-card-w, var(--crsl-card-w, clamp(220px, 28vw, 300px))) !important; }

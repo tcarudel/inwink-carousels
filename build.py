@@ -1,10 +1,12 @@
 """Build CRSL : génère dist/crsl/ (standalone, library, gabarit, demo, README) et dist/crsl-vX.Y.Z.zip.
 Usage : python3 build.py
-Pour ajouter un carrousel : créer src/mods/<cle>.js + .css, l'ajouter à CAROUSELS et à SECTIONS (démo)."""
-import json, os, random, shutil, urllib.parse, uuid, zipfile
+Pour ajouter un carrousel : créer src/mods/<cle>.js + .css, l'ajouter à CAROUSELS et à SECTIONS (démo).
+Pour ajouter/corriger un gabarit inwink : voir la skill inwink-item-style, fichier src/gabarits/<nom>.json
+(copié tel quel dans dist/crsl/gabarit/ — ne jamais éditer un gabarit dans dist/)."""
+import glob, json, os, random, re, shutil, urllib.parse, zipfile
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, OUT = os.path.join(ROOT, "src"), os.path.join(ROOT, "dist", "crsl")
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 CAROUSELS = [  # (clé, nom, famille, options)
   ("vague", "Vague diagonale", 1, "molette, auto"),
   ("coverflow", "Coverflow 3D", 1, "molette, auto"),
@@ -59,89 +61,12 @@ IMGS = [
     scene(51, ("#e46a3d", "#f7c37a"), (1100, 380, "#fff0c2"), [(560, 160, 180, "#c2563a"), (700, 110, 140, "#8e3a2c"), (860, 60, 100, "#4e1f1c")]),
 ]
 
-# ---------- Gabarit CRSL (contrat famille 2) ----------
-def notempty(name):
-    return [{"not": {"or": [{"name": name, "op": "isempty"}, {"name": name, "op": "eq", "val": ""}, {"name": name, "op": "eq", "val": None}]}}]
-def sel(key, fr, en, opts):
-    return {"key": key, "type": "selectlist", "isLocalizable": False, "labels": {"fr": fr, "en": en},
-            "valuesList": [{"isSelectable": True, "key": k, "labels": {"fr": a, "en": b}} for k, a, b in opts]}
-custom_css = """/* Gabarit CRSL – rendu en liste classique tant qu'aucune classe crsl- n'est appliquée au bloc.
-   Contrat pour les carrousels : .crsl-f-picture, .crsl-f-title, .crsl-content (obligatoires), .crsl-f-color (facultatif). */
-##contentid .crsl-f-color { display: none; }
-##contentid .image-light .picture-wrapper:before { background-color: rgba(255, 255, 255, 0.3); }
-##contentid .image-dark .picture-wrapper:before { background-color: rgba(0, 0, 0, 0.3); }
-##contentid :is(.image-dark, .image-light) .picture-wrapper:before { content: ''; position: absolute; inset: 0; z-index: 1; }
-##contentid .text-center :is(.header-container, .description) { text-align: center; }
-##contentid .text-center a[role=button] { margin-left: auto; margin-right: auto; }
-##contentid .text-right :is(.header-container, .description) { text-align: right; }
-##contentid .text-right a[role=button] { margin-left: auto; }
-##contentid .itemcontent { display: flex; flex-flow: column nowrap; gap: 20px; height: 100%; padding: 0; cursor: initial; user-select: initial; }
-##contentid .picture-wrapper { display: flex; position: relative; }
-##contentid .picture-wrapper .picture { width: 100%; height: max(28vh, 10rem); max-height: 220px; object-fit: cover; }
-##contentid .image-cutout .picture-wrapper .picture { object-fit: contain; }
-##contentid .itemcontent .content-wrapper { display: flex; flex-flow: column nowrap; align-items: flex-start; flex: 1; gap: 1rem; width: 100%; }
-##contentid .itemcontent .content-wrapper .header-container { width: 100%; }
-##contentid .itemcontent .content-wrapper :is(h3, h4, .description) { margin: 0; width: 100%; }
-##contentid .card .content-wrapper { padding: 0 20px 20px 20px; }
-##contentid .card :first-child.content-wrapper { padding: 20px; }
-##contentid .card .content-wrapper * + a[role=button] { margin-top: auto; }
-##contentid .inwink-item { container-type: inline-size; }"""
-gab_colors = ["#e2663c", "#2f80c9", "#3fa46a", "#8a5cd6"]
-gabarit = {
-  "id": str(uuid.uuid4()), "type": "itemslist", "customCSS": custom_css,
-  "properties": {
-    "template": {
-      "type": "article", "doNotApplyLink": True,
-      "conditionalClasses": {
-        "text-left": [{"name": "text-position", "op": "eq", "val": "left"}],
-        "text-center": [{"name": "text-position", "op": "eq", "val": "center"}],
-        "text-right": [{"name": "text-position", "op": "eq", "val": "right"}],
-        "image-dark": [{"name": "image-opacity", "op": "eq", "val": "dark"}],
-        "image-light": [{"name": "image-opacity", "op": "eq", "val": "light"}],
-        "image-cutout": [{"name": "picture-cutout", "op": "eq", "val": True}],
-        "card": [{"name": "card-display", "op": "eq", "val": True}]},
-      "blocs": [
-        {"type": "div", "className": "picture-wrapper crsl-f-picture", "showIf": notempty("picture"),
-         "blocs": [{"type": "inwinkimage", "className": "picture", "properties": {
-           "lazy": True, "target": "picture", "alt": ["title"], "sizes": "min(100cqw, 1280px)",
-           "availableSizes": [600, 1000, 1600], "defaultSize": 1000}}]},
-        {"type": "div", "className": "content-wrapper crsl-content", "blocs": [
-          {"type": "header", "className": "header-container", "blocs": [
-            {"type": "h4", "className": "bloc-accent", "showIf": notempty("pretitle"), "fields": [{"name": "pretitle"}]},
-            {"type": "h3", "className": "title crsl-f-title", "showIf": notempty("title"), "fields": [{"name": "title"}]}]},
-          {"type": "div", "className": "description", "showIf": notempty("description"), "fields": [{"name": "description"}]},
-          {"type": "div", "className": "crsl-f-color", "showIf": notempty("color"), "fields": [{"name": "color"}]},
-          {"type": "a", "role": "button", "className": "buttontitle",
-           "showIf": notempty("$link") + notempty("buttontitle"), "fields": [{"name": "buttontitle"}], "useItemLink": True}]}]},
-    "itemDefinition": {
-      "fields": [
-        {"key": "picture", "type": "picture", "isLocalizable": False, "labels": {"fr": "Photo", "en": "Picture"}},
-        {"key": "picture-cutout", "type": "bool", "isLocalizable": False,
-         "labels": {"fr": "Image détourée (PNG transparent)", "en": "Cut-out picture (transparent PNG)"},
-         "descriptions": {"fr": "Utilisé par les carrousels Produit détouré et Écran en diagonale", "en": "Used by the Cut-out product and Diagonal screen carousels"}},
-        {"key": "pretitle", "type": "Text", "isLocalizable": True, "labels": {"fr": "Pré-titre", "en": "Pretitle"}},
-        {"key": "title", "type": "Text", "isLocalizable": True, "labels": {"fr": "Titre", "en": "Title"}},
-        {"key": "description", "type": "multilinetext", "isLocalizable": True, "labels": {"fr": "Description", "en": "Description"}},
-        {"key": "buttontitle", "type": "text", "isLocalizable": True, "labels": {"fr": "Titre bouton", "en": "Button title"}},
-        {"key": "color", "type": "text", "isLocalizable": False, "labels": {"fr": "Couleur (carrousel)", "en": "Color (carousel)"},
-         "descriptions": {"fr": "Hexa, rgb(), rgba() ou hsl(). Ex. : #2f80c9", "en": "Hex, rgb(), rgba() or hsl(). E.g. #2f80c9"}},
-        {"key": "card-display", "type": "bool", "isLocalizable": False, "labels": {"fr": "Affichage de la carte", "en": "Display as a card"}},
-        sel("image-opacity", "Opacité de l'image", "Image opacity", [("light", "Clair", "Light"), ("dark", "Sombre", "Dark"), ("normal", "Aucune", "None")]),
-        sel("text-position", "Position du texte", "Text position", [("left", "Gauche", "Left"), ("center", "Centre", "Center"), ("right", "Droite", "Right")])],
-      "languages": ["fr", "en"]},
-    "items": [{
-      "id": str(uuid.uuid4()),
-      "picture": "https://cdn-assets.inwink.com/backoffice-public/assets/pictures/00-inwink/Background_Blue.jpg",
-      "picture-cutout": False,
-      "pretitle": {"fr": "Pré-titre %d" % (i + 1), "en": "Pretitle %d" % (i + 1)},
-      "title": {"fr": "Titre %d" % (i + 1), "en": "Title %d" % (i + 1)},
-      "description": {"fr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
-      "buttontitle": {"fr": "En savoir plus", "en": "Learn more"}, "$link": {"target": "home"},
-      "color": gab_colors[i], "card-display": True, "image-opacity": "normal", "text-position": "left"} for i in range(4)],
-    "itemsLayout": {"L": "col4", "M": "col3", "S": "col2", "XS": "col2", "XXS": "col1"},
-    "itemsAlign": {"default": "center"}},
-  "layout": None, "header": None}
-write(os.path.join(OUT, "gabarit", "gabarit-crsl.json"), json.dumps(gabarit, ensure_ascii=False, indent=2))
+# ---------- Gabarits inwink (créés par la skill inwink-item-style) ----------
+# Chaque fichier src/gabarits/<nom>.json est copié tel quel : la source de vérité d'un gabarit est ce fichier,
+# jamais dist/crsl/gabarit/. Voir .claude/skills/inwink-item-style/.
+GABARITS = sorted(glob.glob(os.path.join(SRC, "gabarits", "*.json")))
+for gpath in GABARITS:
+    write(os.path.join(OUT, "gabarit", os.path.basename(gpath)), open(gpath, encoding="utf-8").read())
 
 # ---------- Démo locale ----------
 def svg_uri(svg): return "data:image/svg+xml," + urllib.parse.quote(svg)
@@ -254,12 +179,24 @@ write(os.path.join(OUT, "demo", "index.html"), demo)
 
 # ---------- README ----------
 rows = "\n".join("| `crsl-%s` | %s | %d | %s |" % (k, nm, fam, op) for k, nm, fam, op in CAROUSELS)
+def mod_vars(k):
+    """Variables CSS publiques d'un module, lues dans l'en-tête de src/mods/<k>.css
+    (convention : /* Nom – variables : --crsl-... */)."""
+    head_line = read("mods", k + ".css").split("\n", 1)[0]
+    m = re.search(r"variables\s*:\s*(.*)", head_line, re.IGNORECASE)
+    if not m: return "—"
+    seg = m.group(1).split(". ")[0].strip()
+    return re.sub(r"\*/\s*$", "", seg).strip() or "—"
+varrows = "\n".join("| `crsl-%s` | %s |" % (k, mod_vars(k)) for k, *_ in CAROUSELS)
+gabarit_names = [os.path.basename(g) for g in GABARITS]
+gabarit_list = "\n".join("  - `gabarit/%s`" % g for g in gabarit_names) if gabarit_names else "  - (aucun)"
 readme = """# CRSL – carrousels pour les listes d'items inwink (v{V})
 
 ## Contenu
 - `standalone/crsl-<nom>/` : un CSS + un JS par carrousel (noyau inclus).
 - `library/crsl.css` + `library/crsl.js` : tous les carrousels, pour les styles et scripts globaux du site.
-- `gabarit/gabarit-crsl.json` : gabarit de liste d'items statiques pour la famille 2.
+- `gabarit/` : gabarits de liste d'items statiques (JSON, à importer dans le back-office inwink) :
+{GABARITS}
 - `demo/index.html` : démo locale de tous les carrousels (double-clic pour l'ouvrir).
 
 Les deux méthodes peuvent coexister sur une même page : le noyau ne se charge qu'une fois.
@@ -299,12 +236,27 @@ Les classes peuvent être combinées avec d'autres, et les clés des champs reno
 - `crsl-opt-auto` : défilement automatique, en pause au survol.
 
 ## Variables CSS (à définir sur le bloc)
-- `--crsl-card-w` : largeur des cartes (famille 1).
-- `--crsl-h` : hauteur de la scène ou du carrousel.
-- `--crsl-accent` : couleur d'accent (par défaut : couleur de l'item, sinon `--inwinkaccentcolor`).
-- `--crsl-radius` : arrondi des scènes.
-- `--crsl-bg` : fond de la galerie inclinée / du carrousel en verre.
-- `--crsl-diag-bg`, `--crsl-diag-ink` : fond et texte de l'écran en diagonale.
+**Ne jamais modifier `library/crsl.css` ou les fichiers standalone** pour changer une apparence : ces fichiers
+restent identiques partout où la bibliothèque est utilisée. Les valeurs se définissent dans le **CSS propre à
+chaque site** (celui du site, pas celui de CRSL), par exemple :
+```css
+:root { --crsl-radius: 4px; --crsl-accent: #123456; }   /* valeur par défaut pour tout le site */
+.crsl-carte { --crsl-carte-radius: 16px; }              /* un seul carrousel, un autre site */
+```
+Deux sites qui chargent la même bibliothèque peuvent ainsi avoir des rendus différents sans toucher au code de
+CRSL. Convention à deux niveaux : `--crsl-<classe>-<propriété>` (ex. `--crsl-carte-radius`) personnalise un seul
+carrousel ; `--crsl-<propriété>` (ex. `--crsl-radius`) s'applique par défaut à tous les carrousels qui exposent
+cette propriété (radius, border-width, border-color, shadow, gap, duration, accent, bg…). Sans l'une ni l'autre,
+la valeur d'origine du design s'applique.
+
+| Classe | Variables spécifiques |
+|---|---|
+{VARROWS}
+
+Variables globales communes à tous les carrousels : `--crsl-accent` (couleur d'accent, par défaut la couleur de
+l'item sinon `--inwinkaccentcolor`), `--crsl-radius` (arrondi des scènes), `--crsl-h` (hauteur), `--crsl-card-w`
+(largeur des cartes, famille 1), `--crsl-gap`, `--crsl-duration`, `--crsl-shadow`, `--crsl-border-width`,
+`--crsl-border-color`, `--crsl-bg`.
 
 ## Points d'attention
 - **Défilement au scroll** : un parent en `overflow: hidden` ou `auto` empêche l'épinglage du bloc.
@@ -315,7 +267,7 @@ Les classes peuvent être combinées avec d'autres, et les clés des champs reno
 Déposer `library/` dans un dépôt GitHub, puis charger
 `https://cdn.jsdelivr.net/gh/<compte>/<depot>@v{V}/library/crsl.js` (idem pour le CSS).
 Le numéro de version dans l'URL évite les problèmes de cache lors des mises à jour.
-""".replace("{V}", VERSION).replace("{ROWS}", rows)
+""".replace("{V}", VERSION).replace("{ROWS}", rows).replace("{VARROWS}", varrows).replace("{GABARITS}", gabarit_list)
 write(os.path.join(OUT, "README.md"), readme)
 
 zpath = os.path.join(ROOT, "dist", "crsl-v%s.zip" % VERSION)

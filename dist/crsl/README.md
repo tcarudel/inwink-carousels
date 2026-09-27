@@ -1,9 +1,11 @@
-# CRSL – carrousels pour les listes d'items inwink (v1.2.0)
+# CRSL – carrousels pour les listes d'items inwink (v1.3.0)
 
 ## Contenu
 - `standalone/crsl-<nom>/` : un CSS + un JS par carrousel (noyau inclus).
 - `library/crsl.css` + `library/crsl.js` : tous les carrousels, pour les styles et scripts globaux du site.
-- `gabarit/gabarit-crsl.json` : gabarit de liste d'items statiques pour la famille 2.
+- `gabarit/` : gabarits de liste d'items statiques (JSON, à importer dans le back-office inwink) :
+  - `gabarit/gabarit-crsl.json`
+  - `gabarit/produit-relief.json`
 - `demo/index.html` : démo locale de tous les carrousels (double-clic pour l'ouvrir).
 
 Les deux méthodes peuvent coexister sur une même page : le noyau ne se charge qu'une fois.
@@ -58,12 +60,42 @@ Les classes peuvent être combinées avec d'autres, et les clés des champs reno
 - `crsl-opt-auto` : défilement automatique, en pause au survol.
 
 ## Variables CSS (à définir sur le bloc)
-- `--crsl-card-w` : largeur des cartes (famille 1).
-- `--crsl-h` : hauteur de la scène ou du carrousel.
-- `--crsl-accent` : couleur d'accent (par défaut : couleur de l'item, sinon `--inwinkaccentcolor`).
-- `--crsl-radius` : arrondi des scènes.
-- `--crsl-bg` : fond de la galerie inclinée / du carrousel en verre.
-- `--crsl-diag-bg`, `--crsl-diag-ink` : fond et texte de l'écran en diagonale.
+**Ne jamais modifier `library/crsl.css` ou les fichiers standalone** pour changer une apparence : ces fichiers
+restent identiques partout où la bibliothèque est utilisée. Les valeurs se définissent dans le **CSS propre à
+chaque site** (celui du site, pas celui de CRSL), par exemple :
+```css
+:root { --crsl-radius: 4px; --crsl-accent: #123456; }   /* valeur par défaut pour tout le site */
+.crsl-carte { --crsl-carte-radius: 16px; }              /* un seul carrousel, un autre site */
+```
+Deux sites qui chargent la même bibliothèque peuvent ainsi avoir des rendus différents sans toucher au code de
+CRSL. Convention à deux niveaux : `--crsl-<classe>-<propriété>` (ex. `--crsl-carte-radius`) personnalise un seul
+carrousel ; `--crsl-<propriété>` (ex. `--crsl-radius`) s'applique par défaut à tous les carrousels qui exposent
+cette propriété (radius, border-width, border-color, shadow, gap, duration, accent, bg…). Sans l'une ni l'autre,
+la valeur d'origine du design s'applique.
+
+| Classe | Variables spécifiques |
+|---|---|
+| `crsl-vague` | --crsl-vague-card-w |
+| `crsl-coverflow` | --crsl-coverflow-card-w |
+| `crsl-equipe` | --crsl-equipe-card-w |
+| `crsl-focus` | --crsl-focus-card-w, --crsl-focus-radius, --crsl-focus-duration |
+| `crsl-galerie` | --crsl-galerie-card-w, --crsl-galerie-radius, --crsl-galerie-bg (fond), --crsl-galerie-shadow, --crsl-galerie-num-color |
+| `crsl-anneau` | --crsl-anneau-card-w |
+| `crsl-pile` | --crsl-pile-card-w, --crsl-pile-shadow |
+| `crsl-verre` | --crsl-verre-card-w, --crsl-verre-radius, --crsl-verre-bg (fond si pas d'image), --crsl-verre-border-width, --crsl-verre-border-color, --crsl-verre-shadow |
+| `crsl-bandeau` | --crsl-bandeau-card-w |
+| `crsl-accordeon` | --crsl-accordeon-h (hauteur), --crsl-accordeon-radius, --crsl-accordeon-gap |
+| `crsl-defilement` | --crsl-defilement-card-w, --crsl-defilement-gap |
+| `crsl-liste` | --crsl-liste-line (séparateurs), --crsl-liste-preview-w, --crsl-liste-duration, --crsl-liste-radius, --crsl-liste-shadow |
+| `crsl-carte` | --crsl-carte-h, --crsl-carte-accent, --crsl-carte-radius, --crsl-carte-duration, --crsl-carte-shadow |
+| `crsl-rideau` | --crsl-rideau-h, --crsl-rideau-radius |
+| `crsl-diagonale` | --crsl-diagonale-h, --crsl-diagonale-accent, --crsl-diagonale-diag-bg (fond clair), --crsl-diagonale-diag-ink (texte) |
+| `crsl-produit` | --crsl-produit-h, --crsl-produit-accent (fond par défaut sans couleur d'item), --crsl-produit-duration |
+
+Variables globales communes à tous les carrousels : `--crsl-accent` (couleur d'accent, par défaut la couleur de
+l'item sinon `--inwinkaccentcolor`), `--crsl-radius` (arrondi des scènes), `--crsl-h` (hauteur), `--crsl-card-w`
+(largeur des cartes, famille 1), `--crsl-gap`, `--crsl-duration`, `--crsl-shadow`, `--crsl-border-width`,
+`--crsl-border-color`, `--crsl-bg`.
 
 ## Points d'attention
 - **Défilement au scroll** : un parent en `overflow: hidden` ou `auto` empêche l'épinglage du bloc.
@@ -72,5 +104,5 @@ Les classes peuvent être combinées avec d'autres, et les clés des champs reno
 
 ## Hébergement externe (option)
 Déposer `library/` dans un dépôt GitHub, puis charger
-`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.2.0/library/crsl.js` (idem pour le CSS).
+`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.3.0/library/crsl.js` (idem pour le CSS).
 Le numéro de version dans l'URL évite les problèmes de cache lors des mises à jour.

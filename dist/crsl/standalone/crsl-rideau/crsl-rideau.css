@@ -1,13 +1,15 @@
-/*! CRSL v1.2.0 – carrousels pour listes d'items inwink */
-/* CRSL – styles communs */
+/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
+   --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
 
 /* Navigation */
-.crsl-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 1rem; }
+.crsl-nav { display: flex; justify-content: center; gap: var(--crsl-gap, .6rem); margin-top: 1rem; }
 .crsl-arrow {
   width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  border: 1.5px solid currentColor; background: transparent; color: inherit;
-  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity .2s;
+  border-style: solid; border-width: var(--crsl-border-width, 1.5px); border-color: var(--crsl-border-color, currentColor);
+  background: transparent; color: inherit;
+  display: grid; place-items: center; cursor: pointer; opacity: .7; transition: opacity var(--crsl-duration, .2s);
 }
 .crsl-arrow:hover { opacity: 1; }
 .crsl-arrow svg { width: 18px; height: 18px; }
@@ -64,8 +66,13 @@
 .crsl-x-stage *, .crsl-x-stage *::before, .crsl-x-stage *::after { box-sizing: border-box; }
 .crsl-x-stage :is(button, a):focus-visible { outline: 2px solid var(--crsl-accent, var(--inwinkaccentcolor, #f2b441)); outline-offset: 3px; }
 
-/* Transition en rideau – variables : --crsl-h, --crsl-accent, --crsl-radius */
-.crsl-rideau-stage { background: #14191c; color: #fff; }
+/* Transition en rideau – variables : --crsl-rideau-h, --crsl-rideau-radius
+   (l'accent suit la couleur de l'item, posée en JS ; --crsl-accent sert de repli si l'item n'a pas de couleur) */
+.crsl-rideau-stage {
+  height: var(--crsl-rideau-h, var(--crsl-h, clamp(520px, 80vh, 720px)));
+  border-radius: var(--crsl-rideau-radius, var(--crsl-radius, 14px));
+  background: #14191c; color: #fff;
+}
 .crsl-r-layers, .crsl-r-layer { position: absolute; inset: 0; }
 .crsl-r-layer { background: #2a3136 center / cover no-repeat; }
 .crsl-r-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(35deg, rgba(8,12,15,.8), rgba(8,12,15,.15) 60%); }
