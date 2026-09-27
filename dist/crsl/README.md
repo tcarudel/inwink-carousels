@@ -1,4 +1,4 @@
-# CRSL – carrousels pour les listes d'items inwink (v1.3.0)
+# CRSL – carrousels pour les listes d'items inwink (v1.3.1)
 
 ## Contenu
 - `standalone/crsl-<nom>/` : un CSS + un JS par carrousel (noyau inclus).
@@ -85,7 +85,7 @@ la valeur d'origine du design s'applique.
 | `crsl-verre` | --crsl-verre-card-w, --crsl-verre-radius, --crsl-verre-bg (fond si pas d'image), --crsl-verre-border-width, --crsl-verre-border-color, --crsl-verre-shadow |
 | `crsl-bandeau` | --crsl-bandeau-card-w |
 | `crsl-accordeon` | --crsl-accordeon-h (hauteur), --crsl-accordeon-radius, --crsl-accordeon-gap |
-| `crsl-defilement` | --crsl-defilement-card-w, --crsl-defilement-gap |
+| `crsl-defilement` | --crsl-defilement-card-w, --crsl-defilement-gap, |
 | `crsl-liste` | --crsl-liste-line (séparateurs), --crsl-liste-preview-w, --crsl-liste-duration, --crsl-liste-radius, --crsl-liste-shadow |
 | `crsl-carte` | --crsl-carte-h, --crsl-carte-accent, --crsl-carte-radius, --crsl-carte-duration, --crsl-carte-shadow |
 | `crsl-rideau` | --crsl-rideau-h, --crsl-rideau-radius |
@@ -104,5 +104,5 @@ l'item sinon `--inwinkaccentcolor`), `--crsl-radius` (arrondi des scènes), `--c
 
 ## Hébergement externe (option)
 Déposer `library/` dans un dépôt GitHub, puis charger
-`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.3.0/library/crsl.js` (idem pour le CSS).
+`https://cdn.jsdelivr.net/gh/<compte>/<depot>@v1.3.1/library/crsl.js` (idem pour le CSS).
 Le numéro de version dans l'URL évite les problèmes de cache lors des mises à jour.

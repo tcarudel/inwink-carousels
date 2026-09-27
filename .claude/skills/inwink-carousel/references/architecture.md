@@ -41,6 +41,17 @@ Conteneur du bloc (c'est lui qui reçoit la classe `crsl-<cle>`) :
 </div>
 ```
 
+**Conteneur de scroll de la page** : sur un vrai site inwink, la page ne scrolle **jamais** via `window`/le
+document — tout le contenu (header de page, blocs, footer) vit dans un
+`<div class="dynamicpage-scrollcontent">` avec `overflow: hidden auto` et `height: 100%` (classe générique,
+présente sur toutes les pages inwink, confirmée sur le DOM réel). `window` ne reçoit donc jamais d'évènement
+`scroll`. Tout module qui a besoin de savoir où en est le scroll (ex. `crsl-defilement`) doit chercher cet
+ancêtre (`ct.closest(".dynamicpage-scrollcontent")`) et s'y accrocher, avec repli sur `window` pour la démo et
+les pages standalone qui n'ont pas cette structure. `getBoundingClientRect()` reste toujours relatif au
+viewport du navigateur, quel que soit l'élément qui scrolle réellement — seul le choix de la cible de
+l'écouteur `scroll` et de la « hauteur visible » (`clientHeight` du conteneur plutôt que
+`window.innerHeight`) doit changer.
+
 Gabarit statique par défaut (`article`, lien uniquement sur le bouton) :
 
 ```html
@@ -109,7 +120,9 @@ Le gabarit de référence est `src/gabarits/gabarit-crsl.json`, copié tel quel 
 
 ## 6. Pièges connus
 
-- Un parent en `overflow: hidden/auto` empêche l'épinglage de `crsl-defilement` (`position: sticky`).
+- `crsl-defilement` détecte et s'accroche au conteneur de scroll réel (`.dynamicpage-scrollcontent` en
+  production, `window` en démo/standalone) — voir section 2. Un **autre** ancêtre en `overflow: hidden/auto`
+  (ajouté par un gabarit personnalisé, par exemple) empêche toujours l'épinglage (`position: sticky`).
 - `crsl-bandeau` a besoin d'assez d'items pour couvrir la largeur, sinon la boucle se voit.
 - Les boucles infinies de la famille 1 (`loop`) ne sont activées qu'au-delà d'un certain nombre d'items : en
   dessous, une carte « sauterait » d'un bord à l'autre.

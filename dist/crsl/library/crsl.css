@@ -1,4 +1,4 @@
-/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/*! CRSL v1.3.1 – carrousels pour listes d'items inwink */
 /* CRSL – styles communs – variables globales (niveau 2, voir docs/conventions.md) :
    --crsl-accent, --crsl-radius, --crsl-h, --crsl-card-w, --crsl-gap, --crsl-duration, --crsl-border-width, --crsl-border-color */
 .crsl-f-color { display: none !important; }
@@ -212,11 +212,14 @@
   .crsl-accordeon[data-crsl] .inwink-items { flex-direction: column !important; height: var(--crsl-accordeon-h-mobile, var(--crsl-h-mobile, 600px)); }
 }
 
-/* Défilement horizontal au scroll – variables : --crsl-defilement-card-w, --crsl-defilement-gap
-   Attention : un parent en overflow: hidden/auto empêche l'épinglage (position: sticky). */
+/* Défilement horizontal au scroll – variables : --crsl-defilement-card-w, --crsl-defilement-gap,
+   --crsl-defilement-h. La hauteur est de toute façon fixée en JS sur la hauteur visible du vrai
+   conteneur de scroll inwink (.dynamicpage-scrollcontent) ; 100vh n'est qu'un repli avant le premier
+   calcul. Un ancêtre en overflow: hidden/auto AUTRE que .dynamicpage-scrollcontent empêche toujours
+   l'épinglage (position: sticky) : à éviter dans un gabarit personnalisé. */
 .crsl-defilement[data-crsl] { overflow-x: clip; }
 .crsl-defilement[data-crsl] .inwink-items {
-  position: sticky !important; top: 0; height: 100vh; margin: 0 !important;
+  position: sticky !important; top: 0; height: var(--crsl-defilement-h, var(--crsl-h, 100vh)); margin: 0 !important;
   display: flex !important; flex-wrap: nowrap !important; align-items: center;
   gap: var(--crsl-defilement-gap, var(--crsl-gap, 1.2rem));
   padding: 0 4vw !important; overflow: visible !important;

@@ -1,4 +1,4 @@
-/*! CRSL v1.3.0 – carrousels pour listes d'items inwink */
+/*! CRSL v1.3.1 – carrousels pour listes d'items inwink */
 /* CRSL – noyau commun */
 (function (w, d) {
   if (w.CRSL) return; // déjà chargé (bibliothèque + standalone sur la même page)

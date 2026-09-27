@@ -1,5 +1,16 @@
 # Historique
 
+## 1.3.1
+- **Correctif `crsl-defilement`** : sur un vrai site inwink, la page ne scrolle jamais via `window` — tout le
+  contenu vit dans `<div class="dynamicpage-scrollcontent">` (`overflow: hidden auto`, classe générique
+  présente sur toutes les pages inwink, confirmée sur un DOM réel). Le module écoutait `window`, qui ne reçoit
+  jamais l'évènement `scroll` dans ce cas : le carrousel restait figé en production malgré un fonctionnement
+  correct en démo. Il détecte maintenant le vrai conteneur de scroll (repli sur `window` en démo/standalone) et
+  calcule sa progression sur la hauteur visible de ce conteneur plutôt que sur `window.innerHeight`. Décrit dans
+  `architecture.md` (section 2, DOM de référence).
+- Démo locale (`dist/crsl/demo/index.html`) reproduit désormais ce conteneur de scroll réel, pour que le smoke
+  test exerce ce cas plutôt que le scroll natif de la page.
+
 ## 1.3.0
 - **Variables CSS à deux niveaux** dans `core.css` et tous les modules : `var(--crsl-<cle>-<propriete>,
   var(--crsl-<propriete>, <défaut>))` (radius, border-width, border-color, shadow, gap, duration, accent, bg…).

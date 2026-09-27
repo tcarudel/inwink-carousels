@@ -6,7 +6,7 @@ Pour ajouter/corriger un gabarit inwink : voir la skill inwink-item-style, fichi
 import glob, json, os, random, re, shutil, urllib.parse, zipfile
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, OUT = os.path.join(ROOT, "src"), os.path.join(ROOT, "dist", "crsl")
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 CAROUSELS = [  # (clé, nom, famille, options)
   ("vague", "Vague diagonale", 1, "molette, auto"),
   ("coverflow", "Coverflow 3D", 1, "molette, auto"),
@@ -140,7 +140,12 @@ demo = """<!DOCTYPE html>
 <style>
 /* Imitation minimale des styles inwink (démo uniquement) */
 :root { --inwinkaccentcolor: #e8542b; }
-body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f4f4f1; color: #1d2320; }
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f4f4f1; color: #1d2320; }
+/* Reproduit le vrai conteneur de scroll inwink (.dynamicpage-scrollcontent), pour que crsl-defilement
+   soit testé dans les mêmes conditions qu'un vrai site (voir architecture.md, section 2). */
+.dynamicpage-blocscontainer { height: 100vh; }
+.dynamicpage-scrollcontent { display: flex; flex-flow: column nowrap; height: 100%; overflow: hidden auto; scroll-behavior: smooth; width: 100%; }
 main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.2rem 6rem; }
 section { margin-bottom: 5rem; } h2 { margin: 0 0 .3rem; } .hint { color: #5d646b; margin: 0 0 .8rem; }
 .toggle { font: inherit; margin-bottom: 1rem; padding: .4rem .8rem; border-radius: 6px; border: 1px solid #bbb; background: #fff; cursor: pointer; }
@@ -161,11 +166,12 @@ a.itemcontent:has(.overlay) > * { grid-area: stack; }
 a.itemcontent .picture { height: 300px; }
 .overlay { display: flex; flex-direction: column; justify-content: flex-end; padding: 18px; z-index: 1; color: #fff; background: linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,0) 70%); }
 .overlay h3 { margin: 0 0 .4rem; } .overlay .description { font-size: .85rem; }
-</style></head><body><main>
+</style></head><body>
+<div class="dynamicpage-blocscontainer"><div class="dynamicpage-scrollcontent"><main>
 <h1>CRSL – démo locale</h1>
 <p class="hint">Chaque bloc reproduit le DOM d'une liste d'items inwink statique. Le bouton ajoute ou retire la classe du carrousel sur le conteneur, comme dans le back-office.</p>
 {SECTIONS}
-</main>
+</main></div></div>
 <script src="../library/crsl.js"></script>
 <script>
 document.querySelectorAll(".toggle").forEach(function (b) {
